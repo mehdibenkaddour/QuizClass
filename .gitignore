@@ -11,5 +11,5 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /public/uploads/topics/*
-!/public/storage/oauth-public.key
-!/public/storage/oauth-private.key
+!/storage/oauth-public.key
+!/storage/oauth-private.key

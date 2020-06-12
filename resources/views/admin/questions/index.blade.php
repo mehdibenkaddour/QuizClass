@@ -330,17 +330,10 @@ ITerview
 
        <div class="form-group">
        <label>Type</label>
-<<<<<<< HEAD
        <select class="browser-default custom-select" name="add-type" id="add-type">
         <option selected disabled required>Select Type</option>
         <option value="1">Multichoix</option>
         <option value="2">Guess the output</option>
-=======
-       <select class="browser-default custom-select" name="add-type" id="add-type" required>
-        <option selected disabled value="">Select Type</option>
-        <option value="1">Type 1</option>
-        <option value="2">Type 2</option>
->>>>>>> 8ebf9e599ff45f38d9b1911a766d1d09f86c19b4
         <option value="3">Type 3</option>
       </select>
       </div>

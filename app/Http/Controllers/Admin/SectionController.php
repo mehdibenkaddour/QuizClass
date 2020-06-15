@@ -50,7 +50,7 @@ class SectionController extends Controller
                 <button
                 data-id="' . $section->id .'"
                 class="delete dropdown-item">Delete</button>
-                <a class="dropdown-item" href="http://127.0.0.1:8000/questions?section_id=' . $section->id .'">Questions</a>
+                <a class="dropdown-item" href="questions?section_id=' . $section->id .'">Questions</a>
                 </div>
             </div>';
         })

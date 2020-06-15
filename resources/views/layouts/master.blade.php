@@ -59,7 +59,7 @@
             <li class="nav-item">
               <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('users') }}">
                 <i class="ni ni-single-02 text-orange"></i>
-                <span class="nav-link-text">Les utilisateurs d'application</span>
+                <span class="nav-link-text">Utilisateurs</span>
               </a>
             </li>
             <li class="nav-item">

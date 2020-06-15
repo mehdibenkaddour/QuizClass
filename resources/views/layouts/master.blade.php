@@ -65,19 +65,19 @@
             <li class="nav-item">
               <a class="nav-link {{ 'topics' == request()->path() ? 'active' : ''}}" href="{{route('topics.index')}}">
                 <i class="ni ni-collection text-primary"></i>
-                <span class="nav-link-text">Les sujets</span>
+                <span class="nav-link-text">Sujets</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'sections' == request()->path() ? 'active' : ''}}" href="{{route('sections.index')}}">
                 <i class="ni ni-single-copy-04 text-yellow"></i>
-                <span class="nav-link-text">Les Sections</span>
+                <span class="nav-link-text">Sections</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'questions' == request()->path() ? 'active' : ''}}" href="{{route('questions.index')}}">
                 <i class="ni ni-bullet-list-67 text-default"></i>
-                <span class="nav-link-text">Les questions</span>
+                <span class="nav-link-text">Questions</span>
               </a>
             </li>
           </ul>

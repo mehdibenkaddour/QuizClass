@@ -351,7 +351,7 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">List of Questions</h3>
+    <h3 class="mb-0">La liste des questions</h3>
     <button class="btn btn-primary btn-sm float-right add">ADD</button>
   </div>
   <!-- Light table -->

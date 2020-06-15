@@ -71,7 +71,7 @@
             <li class="nav-item">
               <a class="nav-link {{ 'sections' == request()->path() ? 'active' : ''}}" href="{{route('sections.index')}}">
                 <i class="ni ni-single-copy-04 text-yellow"></i>
-                <span class="nav-link-text">Sections</span>
+                <span class="nav-link-text">Eléments</span>
               </a>
             </li>
             <li class="nav-item">

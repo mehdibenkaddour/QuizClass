@@ -332,9 +332,9 @@ ITerview
        <label>Type</label>
        <select class="browser-default custom-select" name="add-type" id="add-type">
         <option selected disabled required>Select Type</option>
-        <option value="1">Multichoix</option>
-        <option value="2">Guess the output</option>
-        <option value="3">Type 3</option>
+        <option value="1">Multichoix avec code</option>
+        <option value="2">Multichoix avec image</option>
+        <option value="3">Guess the output</option>
       </select>
       </div>
       </div>

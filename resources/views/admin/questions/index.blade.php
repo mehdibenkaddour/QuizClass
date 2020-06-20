@@ -97,7 +97,7 @@ ITerview
 <!-- Type 1 -->
 @component('admin.helpers.modal')
     @slot('title')
-    Add Question Type 1
+    Ajouter une question du premier type
     @endslot
 
     @slot('modalId')
@@ -114,7 +114,7 @@ ITerview
 
     @slot('content')
       <div class="form-group">
-          <label>Question</label>
+          <label>La question</label>
           <input type="text" name="add-question-1" value="" class="form-control" id="add-question-1">
           <span class="text-danger">
               <strong id="add-question-error-1"></strong>
@@ -124,11 +124,11 @@ ITerview
       
 
       <div class="form-group">
-          <label for="code">Enter code <small>(Optional)</small></label>
+          <label for="code">Entrer le code <small>(optionnel)</small></label>
           <textarea class="form-control" id="code-1" rows="3" name="code-1"></textarea>
       </div>
       <div class="form-group" id="answers">
-          <label>Answers</label>
+          <label>Les réponses <small>(cocher la bonne réponse)</small></label>
           <div class="input-group">
               <div class="input-group-prepend">
                   <div class="input-group-text">
@@ -172,11 +172,11 @@ ITerview
     @endslot
 
     @slot('cancel')
-        Cancel
+        Annuler
     @endslot
 
     @slot('confirm')
-        Add
+        Ajouter
     @endslot
 
     @slot('submitId')
@@ -189,7 +189,7 @@ ITerview
 
 @component('admin.helpers.modal')
     @slot('title')
-    Add Question Type 2
+    Ajouter une question du deuxiéme type
     @endslot
 
     @slot('modalId')
@@ -206,7 +206,7 @@ ITerview
 
     @slot('content')
       <div class="form-group">
-          <label>Question</label>
+          <label>La question</label>
           <input type="text" name="add-question-2" value="" class="form-control" id="add-question-2">
           <span class="text-danger">
               <strong id="add-question-error-2"></strong>
@@ -214,10 +214,10 @@ ITerview
       </div>
 
       <div class="form-group">
-       <label>Image</label>
+       <label>L'image</label>
         <div class="custom-file">
             <input type="file" name="image" class="custom-file-input" id="add-image">
-            <label class="custom-file-label" for="image">Choose Image</label>
+            <label class="custom-file-label" for="image">Choisissez l'image</label>
         </div>
         <span class="text-danger">
               <strong id="add-image-error"></strong>
@@ -225,7 +225,7 @@ ITerview
       </div>
 
       <div class="form-group" id="answers-2">
-          <label>Answers</label>
+          <label>Les réponses <small>(cocher la bonne réponse)</small></label>
           <div class="input-group">
               <div class="input-group-prepend">
                   <div class="input-group-text">
@@ -269,15 +269,74 @@ ITerview
     @endslot
 
     @slot('cancel')
-        Cancel
+        Annuler
     @endslot
 
     @slot('confirm')
-        Add
+        Ajouter
     @endslot
 
     @slot('submitId')
       addBtn-2
+    @endslot
+
+@endcomponent
+
+
+<!-- type 3 -->
+
+@component('admin.helpers.modal')
+    @slot('title')
+    Ajouter une question du troisiéme type
+    @endslot
+
+    @slot('modalId')
+    add-modal-3
+    @endslot
+
+    @slot('formId')
+    add-form-3
+    @endslot
+
+    @slot('method')
+    POST
+    @endslot
+
+    @slot('content')
+      <div class="form-group">
+          <label>La question</label>
+          <input type="text" name="add-question-3" value="" class="form-control" id="add-question-3">
+          <span class="text-danger">
+              <strong id="add-question-error-3"></strong>
+          </span>
+      </div>
+      <div class="form-group">
+          <label for="code-3">Entrer le code <small>(optionnel)</small></label>
+          <textarea class="form-control" id="code-3" rows="3" name="code-3"></textarea>
+      </div>
+
+      <div class="form-group" id="answers-3">
+          <label>La réponse</label>
+          <div class="input-group">
+              <input type="text" class="form-control" aria-label="Text input with radio button" id="answer-3" required>
+          </div>
+      <span class="text-danger">
+                <strong id="add-answer-error-3"></strong>
+      </span>
+      </div>
+
+    @endslot
+
+    @slot('cancel')
+        Annuler
+    @endslot
+
+    @slot('confirm')
+        Ajouter
+    @endslot
+
+    @slot('submitId')
+      addBtn-3
     @endslot
 
 @endcomponent
@@ -290,7 +349,7 @@ ITerview
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Question Type</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Le Type de la question</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -300,9 +359,9 @@ ITerview
       <div class="row">
         <div class="col">
           <div class="form-group">
-            <label>Topic</label>
+            <label>Le sujet</label>
             <select class="browser-default custom-select" name="add-topic-1" id="add-topic-1" required>
-                <option selected disabled value="">Select Topic</option>
+                <option selected disabled value="">Choisissez un sujet</option>
                 @foreach($topics as $topic )
                 <option value="{{$topic->id}}">{{$topic->label}}</option>
                 @endforeach
@@ -316,9 +375,9 @@ ITerview
 
         <div class="col">
           <div class="form-group">
-              <label>Section</label>
+              <label>L'element</label>
               <select class="browser-default custom-select" name="add-section-1" id="add-section-1" required>
-                  <option selected disabled>Select Section</option>
+                  <option selected disabled>Choisissez un élement</option>
               </select>
               <span class="text-danger">
                 <strong id="add-section-error-1"></strong>
@@ -330,17 +389,17 @@ ITerview
 
        <div class="form-group">
        <label>Type</label>
-       <select class="browser-default custom-select" name="add-type" id="add-type">
-        <option selected disabled required>Select Type</option>
-        <option value="1">Multichoix avec code</option>
-        <option value="2">Multichoix avec image</option>
+       <select class="browser-default custom-select" name="add-type" id="add-type" required>
+        <option selected disabled value="">Choisissez Le type de la question</option>
+        <option value="1">La question avec code</option>
+        <option value="2">La question avec image</option>
         <option value="3">Guess the output</option>
       </select>
       </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="step_1" data-topic="">Next</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" id="step_1" data-topic="">Suivant</button>
       </div>
     </div>
   </div>
@@ -351,19 +410,19 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">La liste des questions</h3>
-    <button class="btn btn-primary btn-sm float-right add">ADD</button>
+    <h3 class="mb-0">La list des questions</h3>
+    <button class="btn btn-primary btn-sm float-right add">Ajouter une question</button>
   </div>
   <!-- Light table -->
   <div class="table-responsive">
     <table class="table align-items-center table-flush" id="questionsTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Question</th>
-          <th scope="col">Type</th>
-          <th scope="col">Topic</th>
-          <th scope="col">Section</th>
-          <th scope="col">Actions</th>
+          <th scope="col">La question</th>
+          <th scope="col">Le type</th>
+          <th scope="col">Le sujet</th>
+          <th scope="col">L'element</th>
+          <th scope="col">Les actions</th>
         </tr>
       </thead>
       <tbody class="list">
@@ -391,6 +450,13 @@ $(document).ready(function() {
             lineNumbers: true,
             indentUnit: 4
         });
+  const textArea= document.getElementById("code-3");
+  const codeMirror=CodeMirror.fromTextArea(textArea,{
+    mode: "javascript",
+            theme: "material-darker",
+            lineNumbers: true,
+            indentUnit: 4
+  });
   const table = handleQuestionsLoad();
 
   handleQuestionsDelete();
@@ -400,14 +466,24 @@ $(document).ready(function() {
   handleQuestionsAdd();
 
   function handleQuestionsLoad() {
-    console.log(get('section_id'));
       const table = $('#questionsTable').DataTable({
         processing: true,
         serverSide: true,
+        language: {
+            "lengthMenu": "Afficher _MENU_ éléments",
+            "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+            "zeroRecords": "Aucune question",
+            "search": "Rechercher",
+            "oPaginate": {
+                "sNext":     "Suivant",
+                "sPrevious": "Précédent"
+    },
+        },
         ajax: {
           url: "{{route('ajax.questions')}}",
           type:'GET',
           data: function (d) {
+          d.search=(".dataTables_filter input[type=search]").value;
           d.section_id = get('section_id');
           }
 
@@ -609,7 +685,7 @@ $(document).ready(function() {
                 }});
 
             });
-          }else{
+          }else if($('#add-type').val()==2){
             $('#add-form-2').attr('action','{{url("/questions")}}');
 
             $( '#add-question-error-2' ).html( "" );
@@ -703,6 +779,60 @@ $(document).ready(function() {
                 }});
 
             });
+          }else{
+            $('#add-form-3').attr('action','{{url("/questions")}}');
+
+            $( '#add-question-error-3' ).html( "" );
+            // clear inputs
+            $('#add-question-3').val('');
+            $("#answer-3").value="";
+            codeMirror.setValue("");
+            codeMirror.refresh();
+            // show the modal
+            $('#add-modal-3').modal('show'); 
+
+            $('#add-form-3').unbind('submit').submit(function(e){
+                // turn button into loading state
+                iterview.handleButtonLoading(true, '#addBtn-3');
+                const urlForm= $(this).attr('action');
+                e.preventDefault();
+                $('#add-question-error-3').html( "" );
+                $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: urlForm,
+                method: 'POST',
+                data: {
+                    content: $('#add-question-3').val(),
+                    topic: $('#add-topic-1').val(),
+                    section: $('#add-section-1').val(),
+                    type:3,
+                    correct_answer:$("#answer-3").val(),
+                    code:$("#code-3").val(),
+                },
+                success: function(result){
+                    // turn button into default state
+                    iterview.handleButtonLoading(false, '#addBtn-3');
+                    if(result.errors)
+                    {
+                      if(result.errors.content && result.errors.correct_answers){
+                        $( '#add-answer-error-3' ).html( "" );
+                        $('#add-form-3').find('#add-question-error-3').html(result.errors.content[0]);
+                      }else if(result.errors.correct_answer){
+                         $( '#add-question-error-3' ).html( "" );
+                         $('#add-form-3').find('#add-answer-error-3').html(result.errors.correct_answer[0]);
+                       }else{
+                         $( '#add-answer-error-3' ).html( "" );
+                         $('#add-form-3').find('#add-question-error-3').html(result.errors.content[0]);
+                       }
+                    }
+                    else{
+                        iterview.handleSuccessResponse(table, result, '#add-modal-3');
+                    }
+                }});
+
+            });
+            
+
           }
         })
     });

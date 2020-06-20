@@ -30,10 +30,11 @@ class QuestionController extends Controller
     public function ajaxQuestions() {
         $questionQuery=Question::query();
         $section_id = (!empty($_GET["section_id"])) ? ($_GET["section_id"]) : ('');
+        $search = (!empty($_GET["search"])) ? ($_GET["search"]) : ('');
         if($section_id){
             $questionQuery->whereRaw("questions.section_id = '" . $section_id . "'");
         }
-        $questions=$questionQuery->select('*');
+        $questions=$questionQuery->latest('created_at')->select('*');
         return Datatables::of($questions)
 
         // add actions collumn
@@ -47,10 +48,10 @@ class QuestionController extends Controller
                     <button
                     data-id="' . $question->id . '"
                     data-type="' . $question->type . '"
-                    class="edit dropdown-item">Edit</button>
+                    class="edit dropdown-item">Modifier</button>
                     <button
                     data-id="' . $question->id .'"
-                    class="delete dropdown-item">Delete</button>
+                    class="delete dropdown-item">Supprimer</button>
                 </div>
             </div>';
         })
@@ -158,7 +159,7 @@ class QuestionController extends Controller
         }
 
         return response()->json(['alert' => 'Section has been Added with success']);
-       }else{
+       }else if($request->input('type')==2){
         $messages = [
             'correct_answers.required' => 'you must select at least one of the answer as correct',
         ];
@@ -205,6 +206,29 @@ class QuestionController extends Controller
             }
         }
 
+        return response()->json(['alert' => 'Section has been Added with success']);
+
+       }else{         
+        $validator = Validator::make($request->all(), [
+            'content' => ['required', 'string'],
+            'correct_answer'=>['required'],
+            ]);
+            
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()]);
+        }
+        $question->content=$request->input('content');
+        $question->section_id=$request->input('section');
+        $question->type=$request->input('type');
+        $question->code=$request->input('code');
+        $question->save();
+
+        $answer=new Answer();
+        $answer->content=$request->input('correct_answer');
+        $answer->correct=true;
+        $answer->question_id=$question->id;
+        $answer->save();
         return response()->json(['alert' => 'Section has been Added with success']);
 
        }

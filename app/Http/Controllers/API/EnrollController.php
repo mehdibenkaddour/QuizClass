@@ -8,7 +8,7 @@ use App\Models\Section;
 use App\Models\Enroll;
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class EnrollController extends ResponseController
 {
@@ -42,11 +42,11 @@ class EnrollController extends ResponseController
     {
         $enroll=new Enroll();
         $topic=Topic::where('code','=',$request->code_access)->first();
-        $user=Enroll::where('user_id','=',$request->user()->id);
-        if($user){
-            return $this->sendError("ALREADY_ENROLLED");
-        }else{
             if($topic){
+                $user=Enroll::where('user_id','=',$request->user()->id)->where('topic_id','=',$topic->id)->get();
+                if(!$user->isEmpty()){
+                    return $this->sendError("ALREADY_ENROLLED");
+                }
                 if($topic->enable){
                     $enroll->user_id=$request->user()->id;
                     $enroll->topic_id=$topic->id;
@@ -60,8 +60,6 @@ class EnrollController extends ResponseController
             }else{
                 return $this->sendError("INVALID_CODE", 404);
             }
-
-        }
         
     }
 

@@ -56,14 +56,16 @@
                 <span class="nav-link-text">Tableau de bord</span>
               </a>
             </li>
+            @if(Auth::user()->role=="admin")
             <li class="nav-item">
               <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('users') }}">
                 <i class="ni ni-single-02 text-orange"></i>
                 <span class="nav-link-text">Utilisateurs</span>
               </a>
             </li>
+            @else
             <li class="nav-item">
-              <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('users') }}">
+              <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('students.index') }}">
                 <i class="ni ni-single-02 text-orange"></i>
                 <span class="nav-link-text">Les étudiants</span>
               </a>
@@ -86,6 +88,7 @@
                 <span class="nav-link-text">Questions</span>
               </a>
             </li>
+            @endif
           </ul>
           <!-- Divider -->
           <hr class="my-3">

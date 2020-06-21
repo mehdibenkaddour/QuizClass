@@ -23,7 +23,7 @@ ITerview
     @endslot
 
     @slot('content')
-    Voulez-vous vraiment supprimer cet élement !
+    Voulez-vous vraiment supprimer l'etudiant !
     @endslot
 
     @slot('cancel')
@@ -51,6 +51,7 @@ ITerview
         <tr>
           <th scope="col">Le nom et prénom</th>
           <th scope="col">Email</th>
+          <th scope="col">Topic</th>
           <th scope="col">Les actions</th>
         </tr>
       </thead>
@@ -69,14 +70,13 @@ ITerview
 <script src="{{ asset('js/iterview.js') }}"></script>
 
 <script>
-
+/* Show the modal */
 $(document).ready(function() {
 
-  const table = handleStudentsLoad();
-
+  const table = handleStudentLoad();
   handleStudentsDelete();
 
-  function handleStudentsLoad() {
+  function handleStudentLoad() {
     // Datatables config
     const table = $('#studentsTable').DataTable({
         processing: true,
@@ -84,7 +84,7 @@ $(document).ready(function() {
         language: {
             "lengthMenu": "Afficher _MENU_ éléments",
             "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
-            "zeroRecords": "Aucun élement",
+            "zeroRecords": "Aucun étudiants",
             "search": "Rechercher",
             "oPaginate": {
                 "sNext":     "Suivant",
@@ -94,31 +94,42 @@ $(document).ready(function() {
         ajax: {
           url: "{{route('ajax.students')}}",
           type:'GET',
+          data: function (d) {
+          d.topic_id = get('topic_id');
+          }
+
         },
         columns: [
-            { data: 'section', name: 'section' },
-            { data: 'topic', name: 'topic'},
+            { data: 'name', name: 'users.name' },
+            { data: 'email', name: 'users.email' },
+            { data: 'topic', name: 'topics.label' },
             { data: 'actions', name: 'actions' }
         ]
     });
 
     return table;
   }
-
-  function handleSectionsDelete() {
+  function handleStudentsDelete() {
     // DELETE A Topic
-    $('#sectionsTable tbody').on('click', 'button.delete', function() {
+    $('#studentsTable tbody').on('click', 'button.delete', function() {
       // get topic id
-      const sectionId = $(this).data('id');
+      const enrollId = $(this).data('id');
 
       // set action
-      $('#delete-form').attr('action', '{{url("/sections")}}'+"/" + sectionId)
+      $('#delete-form').attr('action', '{{url("/students")}}'+"/" + enrollId)
 
       // show the modal
       $('#delete-modal').modal('show');
     });
   }
-  
+
+});
+
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}
+
 </script>
 
 @endsection

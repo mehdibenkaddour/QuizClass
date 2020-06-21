@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('section-title')
-ITerview
+QuizClass
 @endsection
 
 @section('content')

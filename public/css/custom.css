@@ -28,3 +28,7 @@ table.dataTable thead .sorting:after {
     outline: none !important;
     box-shadow: none;
 }
+
+img.navbar-brand-img {
+    max-height: 3.4rem !important;
+}

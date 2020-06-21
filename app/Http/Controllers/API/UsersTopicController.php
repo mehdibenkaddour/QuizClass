@@ -25,7 +25,7 @@ class UsersTopicController extends ResponseController
 
             foreach($enrolls as $enroll){
                 // Teacher name
-                $teacher_name = Topic::find($enroll->topic_id)->user()->first()->name();
+                $teacher_name = Topic::find($enroll->topic_id)->user()->first()->name;
                 $topic = Topic::withCount('sections')->find($enroll->topic_id);
                 $topic->teacher_name = $teacher_name;
                 array_push($result, $topic);

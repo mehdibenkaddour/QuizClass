@@ -22,9 +22,15 @@ class UsersTopicController extends ResponseController
         $enrolls=Enroll::where('user_id','=',$id)->get();
         $result = [];
         if(!$enrolls->isEmpty()){
+            // Teacher name
+            $teacher_name = Topic::find($enroll->topic_id)->user()->first()->name();
+
             foreach($enrolls as $enroll){
-                array_push($result, Topic::withCount('sections')->find($enroll->topic_id));
+                $topic = Topic::withCount('sections')->find($enroll->topic_id);
+                $topic->teacher_name = $teacher_name;
+                array_push($result, $topic);
             }
+            
             return $this->sendResponse($result);
         }else{
             return $this->sendError("NO_TOPICS_FOUND",404);

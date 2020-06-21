@@ -24,6 +24,7 @@ Route::group(['prefix' => 'v1/user'], function (){
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('progress','API\ProgressController@store');
         Route::get('progress','API\ProgressController@progress');
+        Route::get('{id}/topics','API\UsersTopicController@index');
     });
     /*Route::group(['middleware' => 'auth:api'], function() {
         Route::get('logout', 'API\AuthController@logout');

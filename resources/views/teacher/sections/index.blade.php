@@ -170,7 +170,7 @@ ITerview
   <!-- Card header -->
   <div class="card-header border-0">
     <h3 class="mb-0">La liste des éléments</h3>
-    <button class="btn btn-primary btn-sm float-right add">Ajouter un élément</button>
+    <button class="btn btn-primary float-right add">Ajouter un élément</button>
   </div>
   <!-- Light table -->
   <div class="table-responsive">

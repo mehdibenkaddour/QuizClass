@@ -150,7 +150,7 @@ ITerview
   <!-- Card header -->
   <div class="card-header border-0">
     <h3 class="mb-0">La list des sujets</h3>
-    <button class="btn btn-primary btn-sm float-right add">Ajouter un sujet</button>
+    <button class="btn btn-primary float-right add">Ajouter un sujet</button>
   </div>
   <!-- Light table -->
   <div class="table-responsive">

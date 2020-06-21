@@ -9,6 +9,7 @@ use App\Models\Enroll;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Collection;
+use Yajra\Datatables\Datatables;
 
 class StudentController extends Controller
 {
@@ -19,17 +20,23 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        return View('teacher.students.index');
     }
 
    /**
      * This method is for ajax only
      */
-    public function ajaxTopics(Request $request) {
-        return Datatables::of(Topic::latest('created_at')->select('*'))
+    public function ajaxStudents(Request $request) {
+        $teacherTopics=$request->user()->topics()->select('id')->get()->toArray();
+        $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
+        $result=Enroll::whereIn('topic_id',$teacherTopics)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
+        if($topic_id){
+            $result=Enroll::where('topic_id','=',$topic_id)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
+        }
+        return Datatables::of($result)
 
         // add actions collumn
-        ->addColumn('actions', function (Topic $topic) {
+        ->addColumn('actions', function ($model) {
             return '
             <div class="dropdown">
                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -37,40 +44,42 @@ class StudentController extends Controller
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                 <button
-                data-id="' . $topic->id . '"
-                class="edit dropdown-item">Modifier</button>
-                <button
-                data-id="' . $topic->id .'"
+                data-id="' . $model->id .'"
                 class="delete dropdown-item">Supprimer</button>
                 </div>
             </div>';
         })
 
-        ->addColumn('code', function (Topic $topic) {
+        ->addColumn('name', function ($model) {
             return '
             <div class="media align-items-center">
                 <div class="media-body">
-                  <span class="name mb-0 text-sm" id="sectionLabel">' . $topic->code . '</span>
+                  <span class="name mb-0 text-sm" id="userName">' . $model->name . '</span>
                 </div>
             </div>';
         })
 
-        ->addColumn('topic', function (Topic $topic) {
-            $url=route('sections.index');
+        ->addColumn('email', function ($model) {
             return '
             <div class="media align-items-center">
-                <a href="#" class="avatar rounded-circle mr-3">
-                    <img alt="Image placeholder" src="/uploads/topics/' . $topic->image . '">
-                </a>
                 <div class="media-body">
-                <a style="color: inherit" href="' . $url .'?topic_id=' . $topic->id .'"><span class="name mb-0 text-sm" id="TopicLabel">' . $topic->label . '</span></a>
+                  <span class="email mb-0 text-sm" id="userEmail">' . $model->email . '</span>
                 </div>
             </div>
             ';
         })
+
+        ->addColumn('topic', function ($model) {
+            return '
+            <div class="media align-items-center">
+                <div class="media-body">
+                  <span class="name mb-0 text-sm" id="topicLabel">' . $model->label . '</span>
+                </div>
+            </div>';
+        })
         
         // to interpret html and not considering it as text
-        ->rawColumns(['actions','topic','code'])
+        ->rawColumns(['actions','name','email','topic'])
 
         ->toJson();
     }
@@ -139,6 +148,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $enroll=Enroll::findOrFail($id);
+        $enroll->delete();
+        return redirect('students');
     }
 }

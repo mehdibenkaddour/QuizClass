@@ -51,7 +51,7 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link {{ 'admin' == request()->path() ? 'active' : ''}}" href="{{ route('admin') }}">
+              <a class="nav-link {{ 'teacher' == request()->path() ? 'active' : ''}}" href="{{ route('teacher') }}">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Tableau de bord</span>
               </a>
@@ -60,6 +60,12 @@
               <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('users') }}">
                 <i class="ni ni-single-02 text-orange"></i>
                 <span class="nav-link-text">Les utilisateurs d'application</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('users') }}">
+                <i class="ni ni-single-02 text-orange"></i>
+                <span class="nav-link-text">Les étudiants</span>
               </a>
             </li>
             <li class="nav-item">
@@ -436,7 +442,7 @@
             </div>
           </div> --}}
           <!-- Toast -->
-          @include('admin.helpers.messages')
+          @include('teacher.helpers.messages')
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ ITerview
 
 <!-- Delete Modal Component -->
 
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
         Supprimer l'utilisateur
     @endslot
@@ -44,7 +44,7 @@ ITerview
 
 <!-- Edit Modal Component -->
 
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
     Modifier l'utilisateur
     @endslot

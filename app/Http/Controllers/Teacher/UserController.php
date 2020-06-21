@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Teacher;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index(){
         // no need to pass users only return the view
-        return View('admin.users.index');
+        return View('teacher.users.index');
     }
 
     /**

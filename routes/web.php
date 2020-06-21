@@ -19,23 +19,26 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth','admin']], function () {
-    Route::get('/admin', function(){
-        return view('admin.index');
-    })->name('admin');
+    Route::get('/teacher', function(){
+        return view('teacher.index');
+    })->name('teacher');
     
     // users table [ajax only]
-    Route::get('/ajax/users', 'Admin\UserController@ajaxUsers')->name('ajax.users');
+    Route::get('/ajax/users', 'Teacher\UserController@ajaxUsers')->name('ajax.users');
 
     // topics table [ajax only]
-    Route::get('/ajax/topics', 'Admin\TopicController@ajaxTopics')->name('ajax.topics');
+    Route::get('/ajax/topics', 'Teacher\TopicController@ajaxTopics')->name('ajax.topics');
 
     // sections table [ajax only]
-    Route::get('/ajax/sections', 'Admin\SectionController@ajaxSections')->name('ajax.sections');
-    // Questions table 
-    Route::get('/ajax/questions', 'Admin\QuestionController@ajaxQuestions')->name('ajax.questions');
-    Route::get('/sections/get/{id}', 'Admin\QuestionController@getSections');
+    Route::get('/ajax/sections', 'Teacher\SectionController@ajaxSections')->name('ajax.sections');
+    // Questions table [ajax only]
+    Route::get('/ajax/questions', 'Teacher\QuestionController@ajaxQuestions')->name('ajax.questions');
+    // Students table [ajax only]
+    Route::get('/ajax/students', 'Teacher\StudentController@ajaxStudents')->name('ajax.students');
     
-    Route::resource('users','Admin\UserController',['names' => [
+    Route::get('/sections/get/{id}', 'Teacher\QuestionController@getSections');
+    
+    Route::resource('users','Teacher\UserController',['names' => [
         'index' => 'users',
         'update' => 'users.update',
         'destroy' => 'users.delete'
@@ -45,13 +48,16 @@ Route::group(['middleware' => ['auth','admin']], function () {
     ])->parameters(
         ['users' => 'id'
     ]);
-    Route::resource('topics','Admin\TopicController')->parameters(
+    Route::resource('topics','Teacher\TopicController')->parameters(
         ['topics' => 'id']
     );
-    Route::resource('sections','Admin\SectionController')->parameters(
+    Route::resource('sections','Teacher\SectionController')->parameters(
         ['sections' => 'id']
     );
-    Route::resource('questions','Admin\QuestionController')->parameters(
+    Route::resource('questions','Teacher\QuestionController')->parameters(
         ['questions' => 'id']
+    );
+    Route::resource('students','Teacher\StudentController')->parameters(
+        ['students' => 'id']
     );
 });

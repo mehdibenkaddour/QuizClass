@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Teacher;
 
 use App\Models\Topic;
 use App\Models\Question;
@@ -19,16 +19,17 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $topics=Topic::all();
-        return View('admin.questions.index')->with('topics',$topics);
+        $topics=Topic::where('user_id','=',$request->user()->id)->get();
+        return View('teacher.questions.index')->with('topics',$topics);
     }
     /**
      * This method is for ajax only
      */
-    public function ajaxQuestions() {
-        $questionQuery=Question::query();
+    public function ajaxQuestions(Request $request) {
+        $sectionOfUser=Section::whereIn('topic_id',$request->user()->topics()->select('id')->get()->toArray())->select('id')->get()->toArray();
+        $questionQuery=Question::whereIn('section_id',$sectionOfUser);
         $section_id = (!empty($_GET["section_id"])) ? ($_GET["section_id"]) : ('');
         $search = (!empty($_GET["search"])) ? ($_GET["search"]) : ('');
         if($section_id){

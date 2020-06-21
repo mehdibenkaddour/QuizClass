@@ -5,7 +5,7 @@ ITerview
 @endsection
 
 @section('content')
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
         Delete alert
     @endslot
@@ -42,7 +42,7 @@ ITerview
 
 <!-- Edit Modal Component -->
 
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
     Edit Section
     @endslot
@@ -95,7 +95,7 @@ ITerview
 
 
 <!-- Type 1 -->
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
     Ajouter une question du premier type
     @endslot
@@ -187,7 +187,7 @@ ITerview
 
 <!-- type 2 -->
 
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
     Ajouter une question du deuxiéme type
     @endslot
@@ -285,7 +285,7 @@ ITerview
 
 <!-- type 3 -->
 
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
     Ajouter une question du troisiéme type
     @endslot

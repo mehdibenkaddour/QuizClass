@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('section-title')
-ITerview
+Gestion des sujets
 @endsection
 
 @section('content')
@@ -169,17 +169,20 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">La liste des éléments</h3>
-    <button class="btn btn-primary float-right add">Ajouter un élément</button>
+    <h3 class="mb-0">Liste des sujets</h3>
+    <button class="btn btn-primary float-right add">
+      Ajouter un sujet
+      <i class="ni ni-fat-add"></i>
+    </button>
   </div>
   <!-- Light table -->
   <div class="table-responsive">
     <table class="table align-items-center table-flush" id="sectionsTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col">L'élement</th>
-          <th scope="col">Le Sujet</th>
-          <th scope="col">Les actions</th>
+          <th scope="col">Sujet</th>
+          <th scope="col">Module</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody class="list">
@@ -214,9 +217,9 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         language: {
-            "lengthMenu": "Afficher _MENU_ éléments",
-            "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
-            "zeroRecords": "Aucun élement",
+            "lengthMenu": "Afficher _MENU_ sujets",
+            "sInfo":"Affichage du sujet _START_ à _END_ sur _TOTAL_ sujets",
+            "zeroRecords": "Aucun sujet",
             "search": "Rechercher",
             "oPaginate": {
                 "sNext":     "Suivant",

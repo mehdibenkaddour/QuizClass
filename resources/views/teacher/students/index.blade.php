@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('section-title')
-ITerview
+Gestion des étudiants
 @endsection
 
 @section('content')

@@ -1,13 +1,13 @@
 @extends('layouts.master')
 
 @section('section-title')
-ITerview
+Gestion des modules
 @endsection
 
 @section('content')
 @component('teacher.helpers.modal')
     @slot('title')
-        Supprimer le sujet
+        Supprimer ce module
     @endslot
     
     @slot('modalId')
@@ -44,7 +44,7 @@ ITerview
 
 @component('teacher.helpers.modal')
     @slot('title')
-    Modifier le sujet
+    Modifier le module
     @endslot
 
     @slot('modalId')
@@ -97,7 +97,7 @@ ITerview
 
 @component('teacher.helpers.modal')
     @slot('title')
-    Ajouter un sujet
+    Ajouter un module
     @endslot
 
     @slot('modalId')
@@ -149,8 +149,11 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">La list des sujets</h3>
-    <button class="btn btn-primary float-right add">Ajouter un sujet</button>
+    <h3 class="mb-0">Liste des modules</h3>
+    <button class="btn btn-primary float-right add">
+      Ajouter un module
+      <i class="ni ni-fat-add"></i>
+    </button>
   </div>
   <!-- Light table -->
   <div class="table-responsive">
@@ -179,6 +182,7 @@ ITerview
 <script>
 $(document).ready(function() {
 
+  // datatable
   const table = handleTopicLoad();
 
   handleTopicDelete();
@@ -188,12 +192,30 @@ $(document).ready(function() {
   function handleTopicLoad() {
     // Datatables config
     const table = $('#topicsTable').DataTable({
+        initComplete: function(settings, json) {
+          // enable popover
+          $('[data-toggle="popover"]').popover();
+
+          // copy to clipboard
+          $("table .code").on("click", function(e) {
+            const codeSpan = $(this)
+
+            codeSpan[0].addEventListener("copy", function(event) {
+              event.preventDefault();
+              if (event.clipboardData) {
+                event.clipboardData.setData("text/plain", codeSpan[0].textContent);
+              }
+            });
+            const success = document.execCommand('copy');
+
+          })
+        },
         processing: true,
         serverSide: true,
         language: {
-            "lengthMenu": "Afficher _MENU_ éléments",
-            "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
-            "zeroRecords": "Aucun sujets",
+            "lengthMenu": "Afficher _MENU_ modules",
+            "sInfo":"Affichage de du module _START_ à _END_ sur _TOTAL_ modules",
+            "zeroRecords": "Aucun module",
             "search": "Rechercher",
             "oPaginate": {
                 "sNext":     "Suivant",

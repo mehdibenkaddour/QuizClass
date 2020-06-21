@@ -43,7 +43,7 @@ class TopicController extends Controller
                 <button
                 data-id="' . $topic->id .'"
                 class="delete dropdown-item">Supprimer</button>
-                <a class="dropdown-item" href="' . $url .'?topic_id=' . $topic->id .'">Liste Etudiants</a>
+                <a class="dropdown-item" href="' . $url .'?topic_id=' . $topic->id .'">Liste des étudiants inscrits</a>
                 </div>
             </div>';
         })
@@ -52,7 +52,7 @@ class TopicController extends Controller
             return '
             <div class="media align-items-center">
                 <div class="media-body">
-                  <span class="name mb-0 text-sm" id="sectionLabel">' . $topic->code . '</span>
+                  <span class="code text-sm" tabindex="0" data-toggle="popover" data-content="Le code a été copié avec succès" data-trigger="focus" data-placement="bottom">' . $topic->code . '</span>
                 </div>
             </div>';
         })

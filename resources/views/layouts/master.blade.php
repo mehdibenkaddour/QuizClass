@@ -67,19 +67,19 @@
             <li class="nav-item">
               <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('students.index') }}">
                 <i class="ni ni-single-02 text-orange"></i>
-                <span class="nav-link-text">Les étudiants</span>
+                <span class="nav-link-text">Etudiants</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'topics' == request()->path() ? 'active' : ''}}" href="{{route('topics.index')}}">
                 <i class="ni ni-collection text-primary"></i>
-                <span class="nav-link-text">Sujets</span>
+                <span class="nav-link-text">Modules</span>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'sections' == request()->path() ? 'active' : ''}}" href="{{route('sections.index')}}">
                 <i class="ni ni-single-copy-04 text-yellow"></i>
-                <span class="nav-link-text">Eléments</span>
+                <span class="nav-link-text">Sujets</span>
               </a>
             </li>
             <li class="nav-item">

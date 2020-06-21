@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Teacher;
 
-use App\Models\Topic;
 use Illuminate\Http\Request;
+use App\Models\Topic;
+use App\Models\Section;
+use App\Models\Enroll;
+use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Yajra\Datatables\Datatables;
+use Illuminate\Database\Eloquent\Collection;
 
-class TopicController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +19,13 @@ class TopicController extends Controller
      */
     public function index()
     {
-        // $topics = Topic::orderBy('id')->paginate(10);
-        return View('admin.topics.index');
+        //
     }
 
-    /**
+   /**
      * This method is for ajax only
      */
-    public function ajaxTopics() {
+    public function ajaxTopics(Request $request) {
         return Datatables::of(Topic::latest('created_at')->select('*'))
 
         // add actions collumn
@@ -75,6 +75,7 @@ class TopicController extends Controller
         ->toJson();
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -93,40 +94,7 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'label' => ['required', 'string', 'max:255'],
-            'image' => ['required','image','mimes:jpeg,png,jpg,gif', 'max:2084'],
-        ]);
-        
-        if ($validator->fails())
-        {
-            return response()->json(['errors'=>$validator->errors()]);
-        }
-        $topic = new Topic();
-
-        $topic->label=$request->input('label');
-        $topic->code=$this->random_strings(8);
-        $topic->enable=true;
-
-        if($request->hasfile('image')) {
-            $file=$request->file('image');
-            $extension=$file->getClientOriginalExtension();
-            $filename=time() . '.' . $extension;
-            $file->move('uploads/topics/',$filename);
-            $topic->image=$filename;
-
-        } else {
-            return $request;
-            $topic->image="default_image";
-        }
-        
-        $topic->save();
-
-        // flash the session
-        $request->session()->flash('status', 'Topic has been added with success');
-
-        return response()->json(['alert' => 'Topic has been added with success']);
-
+        //
     }
 
     /**
@@ -160,27 +128,7 @@ class TopicController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $topic = Topic::find($id);
-
-        $validator = Validator::make($request->all(), [
-            'label' => ['required', 'string', 'max:255'],
-        ]);
-        
-        if ($validator->fails())
-        {
-            return response()->json(['errors'=>$validator->errors()]);
-        }
-
-        $topic->label=$request->input('label');
-        if($request->hasfile('image')){
-            $file=$request->file('image');
-            $extension=$file->getClientOriginalExtension();
-            $filename=time() . '.' . $extension;
-            $file->move('uploads/topics/',$filename);
-            $topic->image=$filename;
-        }
-        $topic->update();
-        return response()->json(['alert' => 'Topic has been updated with success']);
+        //
     }
 
     /**
@@ -191,21 +139,6 @@ class TopicController extends Controller
      */
     public function destroy($id)
     {
-        $topic=Topic::findOrFail($id);
-
-        $topic->delete();
-
-        return redirect('topics');
+        //
     }
-    private function random_strings($length_of_string) 
-    { 
-  
-        // String of all alphanumeric character 
-        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; 
-  
-        // Shufle the $str_result and returns substring 
-        // of specified length 
-        return substr(str_shuffle($str_result),  
-                       0, $length_of_string); 
-    } 
 }

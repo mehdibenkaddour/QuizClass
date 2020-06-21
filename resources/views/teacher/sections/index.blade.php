@@ -5,7 +5,7 @@ ITerview
 @endsection
 
 @section('content')
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
         Supprimer un élement
     @endslot
@@ -42,7 +42,7 @@ ITerview
 
 <!-- Edit Modal Component -->
 
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
     Modifier un élement
     @endslot
@@ -103,7 +103,7 @@ ITerview
 
 <!-- ADD Modal Component -->
 
-@component('admin.helpers.modal')
+@component('teacher.helpers.modal')
     @slot('title')
     Ajouter un élement
     @endslot

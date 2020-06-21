@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Teacher;
 
 use App\Models\Topic;
-use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 
-class SectionController extends Controller
+class TopicController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,25 +18,18 @@ class SectionController extends Controller
      */
     public function index()
     {
-        // $sections=Section::orderBy('id')->paginate(10);
-        $topics=Topic::all();
-        return View('admin.sections.index')->with('topics',$topics);
+        // $topics = Topic::orderBy('id')->paginate(10);
+        return View('teacher.topics.index');
     }
 
     /**
      * This method is for ajax only
      */
-    public function ajaxSections() {
-        $sectionQuery=Section::query();
-        $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
-        if($topic_id){
-            $sectionQuery->whereRaw("sections.topic_id = '" . $topic_id . "'");
-        }
-        $sections=$sectionQuery->latest('created_at')->select('*');
-        return Datatables::of($sections)
+    public function ajaxTopics(Request $request) {
+        return Datatables::of(Topic::latest('created_at')->where('user_id','=',$request->user()->id)->select('*'))
 
         // add actions collumn
-        ->addColumn('actions', function (Section $section) {
+        ->addColumn('actions', function (Topic $topic) {
             return '
             <div class="dropdown">
                 <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,35 +37,40 @@ class SectionController extends Controller
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                 <button
-                data-id="' . $section->id . '"
+                data-id="' . $topic->id . '"
                 class="edit dropdown-item">Modifier</button>
                 <button
-                data-id="' . $section->id .'"
+                data-id="' . $topic->id .'"
                 class="delete dropdown-item">Supprimer</button>
                 </div>
             </div>';
         })
 
-        ->addColumn('section', function (Section $section) {
-            $url=route('questions.index');
+        ->addColumn('code', function (Topic $topic) {
+            return '
+            <div class="media align-items-center">
+                <div class="media-body">
+                  <span class="name mb-0 text-sm" id="sectionLabel">' . $topic->code . '</span>
+                </div>
+            </div>';
+        })
+
+        ->addColumn('topic', function (Topic $topic) {
+            $url=route('sections.index');
             return '
             <div class="media align-items-center">
                 <a href="#" class="avatar rounded-circle mr-3">
-                    <img alt="Image placeholder" src="/uploads/sections/' . $section->image . '">
+                    <img alt="Image placeholder" src="/uploads/topics/' . $topic->image . '">
                 </a>
                 <div class="media-body">
-                <a style="color: inherit" href="' . $url .'?section_id=' . $section->id .'"><span class="name mb-0 text-sm" id="sectionLabel">' . $section->label . '</span></a>
+                <a style="color: inherit" href="' . $url .'?topic_id=' . $topic->id .'"><span class="name mb-0 text-sm" id="TopicLabel">' . $topic->label . '</span></a>
                 </div>
             </div>
             ';
         })
-
-        ->addColumn('topic', function(Section $section) {
-            return $section->topic->label;
-        })
         
         // to interpret html and not considering it as text
-        ->rawColumns(['actions', 'section'])
+        ->rawColumns(['actions','topic','code'])
 
         ->toJson();
     }
@@ -98,7 +95,6 @@ class SectionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'label' => ['required', 'string', 'max:255'],
-            'topic'=>['required'],
             'image' => ['required','image','mimes:jpeg,png,jpg,gif', 'max:2084'],
         ]);
         
@@ -106,25 +102,31 @@ class SectionController extends Controller
         {
             return response()->json(['errors'=>$validator->errors()]);
         }
-        $section = new Section();
+        $topic = new Topic();
 
-        $section->label=$request->input('label');
-        $section->topic_id=$request->input('topic');
+        $topic->label=$request->input('label');
+        $topic->code=$this->random_strings(8);
+        $topic->user_id=$request->user()->id;
+        $topic->enable=true;
 
         if($request->hasfile('image')) {
             $file=$request->file('image');
             $extension=$file->getClientOriginalExtension();
             $filename=time() . '.' . $extension;
-            $file->move('uploads/sections/',$filename);
-            $section->image=$filename;
+            $file->move('uploads/topics/',$filename);
+            $topic->image=$filename;
 
         } else {
             return $request;
-            $section->image="default_image";
+            $topic->image="default_image";
         }
-        $section->save();
+        
+        $topic->save();
 
-        return response()->json(['alert' => 'Section has been Added with success']);
+        // flash the session
+        $request->session()->flash('status', 'Topic has been added with success');
+
+        return response()->json(['alert' => 'Topic has been added with success']);
 
     }
 
@@ -159,7 +161,7 @@ class SectionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $section = Section::find($id);
+        $topic = Topic::find($id);
 
         $validator = Validator::make($request->all(), [
             'label' => ['required', 'string', 'max:255'],
@@ -170,18 +172,16 @@ class SectionController extends Controller
             return response()->json(['errors'=>$validator->errors()]);
         }
 
-        $section->label=$request->input('label');
-        $section->topic_id=$request->input('topic');
-
+        $topic->label=$request->input('label');
         if($request->hasfile('image')){
             $file=$request->file('image');
             $extension=$file->getClientOriginalExtension();
             $filename=time() . '.' . $extension;
-            $file->move('uploads/sections/',$filename);
-            $section->image=$filename;
+            $file->move('uploads/topics/',$filename);
+            $topic->image=$filename;
         }
-        $section->update();
-        return response()->json(['alert' => 'Section has been updated with success']);
+        $topic->update();
+        return response()->json(['alert' => 'Topic has been updated with success']);
     }
 
     /**
@@ -192,8 +192,21 @@ class SectionController extends Controller
      */
     public function destroy($id)
     {
-        $section=Section::findOrFail($id);
-        $section->delete();
-        return redirect('sections');
+        $topic=Topic::findOrFail($id);
+
+        $topic->delete();
+
+        return redirect('topics');
     }
+    private function random_strings($length_of_string) 
+    { 
+  
+        // String of all alphanumeric character 
+        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; 
+  
+        // Shufle the $str_result and returns substring 
+        // of specified length 
+        return substr(str_shuffle($str_result),  
+                       0, $length_of_string); 
+    } 
 }

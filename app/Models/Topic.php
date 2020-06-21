@@ -21,4 +21,8 @@ class Topic extends Model
     public function enrolls(){
         return $this->hasMany('App\Models\Enroll');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

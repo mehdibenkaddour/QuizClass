@@ -107,6 +107,8 @@ $(document).ready(function() {
     url = "{{route('ajax.students')}}"
   }
 
+  console.log(url)
+
   handleStudentsDelete();
 
   function handleStudentLoad() {

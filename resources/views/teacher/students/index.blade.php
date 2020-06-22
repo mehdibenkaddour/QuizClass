@@ -94,7 +94,7 @@ $(document).ready(function() {
       topicIdParam = data.selectedData.value;
       const url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
       table.ajax.url(url)
-      // table.ajax.reload();
+      table.ajax.reload();
       console.log(table.ajax.url())
     }
   });

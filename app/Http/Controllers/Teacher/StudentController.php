@@ -30,7 +30,8 @@ class StudentController extends Controller
      * This method is for ajax only
      */
     public function ajaxStudents(Request $request) {
-        $teacherTopics = $request->user()->topics()->select('id')->get()->toArray();
+        // this returns ['0' => ['id' => 1, 'id' => 2 ...]] 
+        $teacherTopics = $request->user()->topics()->select('id')->get()->toArray()[0];
 
         $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
 
@@ -40,7 +41,7 @@ class StudentController extends Controller
         
         if ($topic_id && in_array($topic_id, $teacherTopics)) {
             $result=Enroll::where('topic_id','=',$topic_id)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
-        }        
+        }
         
         return Datatables::of($result)
 

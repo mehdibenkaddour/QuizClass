@@ -44,16 +44,17 @@ Gestion des étudiants
   <div class="card-header border-0">
     <h3 class="mb-0">La Liste des étudiants</h3>
   </div>
-
-  <select id="moduleSelect">
-    @foreach ($topics as $topic)
-    <option 
-      data-imagesrc={{'/uploads/topics/' . $topic->image}}
-      value="{{ $topic->id }}">
-      {{ $topic->label }}
-    </option>
-    @endforeach
-  </select>
+  @if (!$topic_id)
+    <select id="moduleSelect">
+      @foreach ($topics as $topic)
+      <option 
+        data-imagesrc={{'/uploads/topics/' . $topic->image}}
+        value="{{ $topic->id }}">
+        {{ $topic->label }}
+      </option>
+      @endforeach
+    </select>
+  @endif
 
   <!-- Light table -->
   <div class="table-responsive">
@@ -84,28 +85,37 @@ Gestion des étudiants
 <script>
 /* Show the modal */
 $(document).ready(function() {
-
   let topicIdParam = $("#moduleSelect").val()
 
   const table = handleStudentLoad()
 
-  // ddslick plugin
-  $("#moduleSelect").ddslick({
-    onSelected: function(data) {
-      topicIdParam = data.selectedData.value;
-      const url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
-      table.ajax.url(url)
-      table.ajax.reload();
-      console.log(table.ajax.url())
-    }
-  });
+  if("{{ $topic_id }}") {
+    $("#moduleSelect").hide()
+  } else {
+    // ddslick plugin
+    $("#moduleSelect").ddslick({
+      onSelected: function(data) {
+        topicIdParam = data.selectedData.value;
+        const url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
+        table.ajax.url(url)
+        table.ajax.reload();
+        console.log(table.ajax.url())
+      }
+    });
+  }
 
   handleStudentsDelete();
 
   function handleStudentLoad() {
-    let url = "{{route('ajax.students')}}" + '?topic_id=' + "{{ $topic_id }}"
-    if(!url)
+    const topicIdGET = "{{ $topic_id }}"
+
+    let url = undefined
+    
+    if(topicIdGET) {
+      url = "{{route('ajax.students')}}" + '?topic_id=' + "{{ $topic_id }}"
+    } else {
       url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
+    }
 
     // Datatables config
     const table = $('#studentsTable').DataTable({

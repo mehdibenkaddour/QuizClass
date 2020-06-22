@@ -30,11 +30,14 @@ class StudentController extends Controller
      * This method is for ajax only
      */
     public function ajaxStudents(Request $request) {
+        // IMPORTANT NOTE
+        // if there is no data, this returns []
+        // if there is, this return ['0' => ['id' => 1, 'id'=> 2 ...]]
+        // so we have to work with $teacherTopics[0]
+
         $teacherTopics = $request->user()->topics()->select('id')->get()->toArray();
 
         $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
-
-        // $result = Enroll::whereIn('topic_id',$teacherTopics)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
         
         $result = array();
         

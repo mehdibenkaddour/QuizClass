@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Auth;
 
 class SectionController extends Controller
 {
@@ -20,8 +21,11 @@ class SectionController extends Controller
     public function index(Request $request)
     {
         // $sections=Section::orderBy('id')->paginate(10);
-        $topics=Topic::where('user_id','=',$request->user()->id)->get();
-        return View('teacher.sections.index')->with('topics',$topics);
+        // $topics=Topic::where('user_id','=',$request->user()->id)->get();
+        $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
+        
+        return View('teacher.sections.index')->with('topics', Auth::user()->topics)
+                                             ->with('topic_id', $topic_id);
     }
 
     /**

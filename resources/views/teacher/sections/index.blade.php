@@ -175,6 +175,17 @@ Gestion des sujets
       <i class="ni ni-fat-add"></i>
     </button>
   </div>
+  @if (!$topic_id && count($topics) > 0)
+    <select id="moduleSelect">
+      @foreach ($topics as $topic)
+      <option 
+        data-imagesrc={{'/uploads/topics/' . $topic->image}}
+        value="{{ $topic->id }}">
+        {{ $topic->label }}
+      </option>
+      @endforeach
+    </select>
+  @endif
   <!-- Light table -->
   <div class="table-responsive">
     <table class="table align-items-center table-flush" id="sectionsTable">
@@ -198,12 +209,31 @@ Gestion des sujets
 
 {{-- import iterview utilities --}}
 <script src="{{ asset('js/iterview.js') }}"></script>
+<script src="{{ asset('js/ddslick.min.js') }}"></script>
 
 <script>
 
 $(document).ready(function() {
+  let topicIdParam = $("#moduleSelect").val()
 
   const table = handleSectionsLoad();
+
+
+  if("{{ $topic_id }}") {
+    $("#moduleSelect").hide()
+
+  } else {
+    // ddslick plugin
+    $("#moduleSelect").ddslick({
+      onSelected: function(data) {
+        topicIdParam = data.selectedData.value;
+        const url = "{{route('ajax.sections')}}" + '?topic_id=' + topicIdParam
+        table.ajax.url(url)
+        table.ajax.reload();
+        console.log(table.ajax.url())
+      }
+    });
+  }
 
   handleSectionsDelete();
 
@@ -212,6 +242,18 @@ $(document).ready(function() {
   handleSectionsAdd();
 
   function handleSectionsLoad() {
+    const topicIdGET = "{{ $topic_id }}"
+
+    let url = undefined
+    
+    if(topicIdGET) {
+      url = "{{route('ajax.sections')}}" + '?topic_id=' + "{{ $topic_id }}"
+    } else if(topicIdParam) {
+      url = "{{route('ajax.sections')}}" + '?topic_id=' + topicIdParam
+    } else {
+      url = "{{route('ajax.sections')}}"
+    }
+
     // Datatables config
     const table = $('#sectionsTable').DataTable({
         processing: true,
@@ -227,11 +269,8 @@ $(document).ready(function() {
     },
         },
         ajax: {
-          url: "{{route('ajax.sections')}}",
-          type:'GET',
-          data: function (d) {
-            d.topic_id = get('topic_id');
-          }
+          url: url,
+          type:'GET'
 
         },
         columns: [

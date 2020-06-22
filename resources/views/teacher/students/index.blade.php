@@ -92,7 +92,7 @@ $(document).ready(function() {
   if("{{ $topic_id }}") {
     $("#moduleSelect").hide()
 
-  } else (topicIdParam) {
+  } else {
     // ddslick plugin
     $("#moduleSelect").ddslick({
       onSelected: function(data) {

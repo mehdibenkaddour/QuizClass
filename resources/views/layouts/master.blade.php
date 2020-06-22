@@ -65,7 +65,7 @@
             </li>
             @else
             <li class="nav-item">
-              <a class="nav-link {{ 'users' == request()->path() ? 'active' : ''}}" href="{{ route('students.index') }}">
+              <a class="nav-link {{ 'students' == request()->path() ? 'active' : ''}}" href="{{ route('students.index') }}">
                 <i class="ni ni-single-02 text-orange"></i>
                 <span class="nav-link-text">Etudiants</span>
               </a>

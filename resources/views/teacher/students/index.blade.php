@@ -44,7 +44,7 @@ Gestion des étudiants
   <div class="card-header border-0">
     <h3 class="mb-0">La Liste des étudiants</h3>
   </div>
-  @if (!$topic_id)
+  @if (!$topic_id && count($topics) > 0)
     <select id="moduleSelect">
       @foreach ($topics as $topic)
       <option 
@@ -91,7 +91,8 @@ $(document).ready(function() {
 
   if("{{ $topic_id }}") {
     $("#moduleSelect").hide()
-  } else {
+
+  } else if(topicIdParam) {
     // ddslick plugin
     $("#moduleSelect").ddslick({
       onSelected: function(data) {
@@ -102,6 +103,8 @@ $(document).ready(function() {
         console.log(table.ajax.url())
       }
     });
+  } else {
+    url = "{{route('ajax.students')}}"
   }
 
   handleStudentsDelete();

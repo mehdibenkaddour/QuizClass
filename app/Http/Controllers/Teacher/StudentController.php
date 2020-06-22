@@ -30,16 +30,16 @@ class StudentController extends Controller
      * This method is for ajax only
      */
     public function ajaxStudents(Request $request) {
-        $teacherTopics=$request->user()->topics()->select('id')->get()->toArray();
+        $teacherTopics = $request->user()->topics()->select('id')->get()->toArray();
 
-        $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : null;
+        $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
 
         $result = Enroll::whereIn('topic_id',$teacherTopics)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
         
         if($topic_id) {
             $result=Enroll::where('topic_id','=',$topic_id)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
         }
-
+        
         return Datatables::of($result)
 
         // add actions collumn

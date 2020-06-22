@@ -92,7 +92,7 @@ $(document).ready(function() {
   if("{{ $topic_id }}") {
     $("#moduleSelect").hide()
 
-  } else if(topicIdParam) {
+  } else (topicIdParam) {
     // ddslick plugin
     $("#moduleSelect").ddslick({
       onSelected: function(data) {
@@ -103,11 +103,7 @@ $(document).ready(function() {
         console.log(table.ajax.url())
       }
     });
-  } else {
-    url = "{{route('ajax.students')}}"
   }
-
-  console.log(url)
 
   handleStudentsDelete();
 
@@ -118,8 +114,10 @@ $(document).ready(function() {
     
     if(topicIdGET) {
       url = "{{route('ajax.students')}}" + '?topic_id=' + "{{ $topic_id }}"
-    } else {
+    } else if(topicIdParam) {
       url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
+    } else {
+      url = "{{route('ajax.students')}}"
     }
 
     // Datatables config

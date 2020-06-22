@@ -21,7 +21,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return View('teacher.students.index')->with('topics', Auth::user()->topics);
+        $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
+        return View('teacher.students.index')->with('topics', Auth::user()->topics)
+                                             ->with('topic_id', $topic_id);
     }
 
    /**

@@ -103,9 +103,9 @@ $(document).ready(function() {
   handleStudentsDelete();
 
   function handleStudentLoad() {
-    let url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
-
-    console.log(url)
+    let url = "{{route('ajax.students')}}" + '?topic_id=' + "{{ $topic_id }}"
+    if(!url)
+      url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
 
     // Datatables config
     const table = $('#studentsTable').DataTable({
@@ -123,10 +123,7 @@ $(document).ready(function() {
         },
         ajax: {
           url: url,
-          type:'GET',
-          data: function (d) {
-            d.topic_id = get('topic_id');
-          }
+          type:'GET'
 
         },
         columns: [

@@ -34,10 +34,9 @@ class StudentController extends Controller
 
         $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
 
-
         $result = Enroll::whereIn('topic_id',$teacherTopics)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
         
-        if(in_array($topic_id, $teacherTopics)) {
+        if(!in_array($topic_id, $teacherTopics)) {
             $result = NULL;
         }
         

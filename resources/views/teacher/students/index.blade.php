@@ -84,7 +84,8 @@ Gestion des étudiants
 <script>
 /* Show the modal */
 $(document).ready(function() {
-  let topicIdParam = undefined
+
+  let topicIdParam = $("#moduleSelect").val()
 
   const table = handleStudentLoad()
 

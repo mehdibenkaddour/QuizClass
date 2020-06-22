@@ -84,3 +84,8 @@ img.navbar-brand-img {
     line-height: 50px !important;
     margin-bottom: 0;
 }
+
+.dd-select,
+.dd-options {
+    width: 300px !important;
+}

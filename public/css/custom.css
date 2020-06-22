@@ -59,3 +59,28 @@ img.navbar-brand-img {
 .code:hover {
     background: #e6f2ff;
 }
+
+/* Overriding ddslick plugin css */
+
+.dd-option-image, .dd-selected-image {
+    max-width: 50px !important;
+}
+
+.dd-select label {
+    margin-bottom: 0 !important;
+    line-height: 50px !important;
+}
+
+.dd-select {
+    background: rgb(251, 251, 251) !important;
+    border-radius: 5px !important;
+}
+
+#moduleSelect {
+    margin: 0 0 1.25rem 1.25rem;
+}
+
+.dd-option-text {
+    line-height: 50px !important;
+    margin-bottom: 0;
+}

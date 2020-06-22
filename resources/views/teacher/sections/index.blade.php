@@ -230,7 +230,7 @@ $(document).ready(function() {
           url: "{{route('ajax.sections')}}",
           type:'GET',
           data: function (d) {
-          d.topic_id = get('topic_id');
+            d.topic_id = get('topic_id');
           }
 
         },

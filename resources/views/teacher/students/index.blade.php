@@ -44,6 +44,17 @@ Gestion des étudiants
   <div class="card-header border-0">
     <h3 class="mb-0">La Liste des étudiants</h3>
   </div>
+
+  <select id="moduleSelect">
+    @foreach ($topics as $topic)
+    <option 
+      data-imagesrc={{'/uploads/topics/' . $topic->image}}
+      value="{{ $topic->id }}">
+      {{ $topic->label }}
+    </option>
+    @endforeach
+  </select>
+
   <!-- Light table -->
   <div class="table-responsive">
     <table class="table align-items-center table-flush" id="studentsTable">
@@ -68,15 +79,33 @@ Gestion des étudiants
 
 {{-- import iterview utilities --}}
 <script src="{{ asset('js/iterview.js') }}"></script>
+<script src="{{ asset('js/ddslick.min.js') }}"></script>
 
 <script>
 /* Show the modal */
 $(document).ready(function() {
+  let topicIdParam = undefined
 
-  const table = handleStudentLoad();
+  const table = handleStudentLoad()
+
+  // ddslick plugin
+  $("#moduleSelect").ddslick({
+    onSelected: function(data) {
+      topicIdParam = data.selectedData.value;
+      const url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
+      table.ajax.url(url)
+      // table.ajax.reload();
+      console.log(table.ajax.url())
+    }
+  });
+
   handleStudentsDelete();
 
   function handleStudentLoad() {
+    let url = "{{route('ajax.students')}}" + '?topic_id=' + topicIdParam
+
+    console.log(url)
+
     // Datatables config
     const table = $('#studentsTable').DataTable({
         processing: true,
@@ -92,10 +121,10 @@ $(document).ready(function() {
     },
         },
         ajax: {
-          url: "{{route('ajax.students')}}",
+          url: url,
           type:'GET',
           data: function (d) {
-          d.topic_id = get('topic_id');
+            d.topic_id = get('topic_id');
           }
 
         },

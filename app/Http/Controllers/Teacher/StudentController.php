@@ -10,6 +10,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Collection;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -20,7 +21,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return View('teacher.students.index');
+        return View('teacher.students.index')->with('topics', Auth::user()->topics);
     }
 
    /**

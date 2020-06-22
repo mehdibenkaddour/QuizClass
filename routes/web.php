@@ -60,4 +60,7 @@ Route::group(['middleware' => ['auth','admin']], function () {
     Route::resource('students','Teacher\StudentController')->parameters(
         ['students' => 'id']
     );
+    Route::resource('profile','Teacher\ProfileController')->parameters(
+        ['profile' => 'id']
+    );
 });

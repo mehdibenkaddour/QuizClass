@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth','admin']], function () {
     Route::get('/teacher', function(){
-        return view('teacher.index');
+        return redirect('/teacher/profile');;
     })->name('teacher');
     
     // users table [ajax only]
@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth','admin']], function () {
     Route::resource('students','Teacher\StudentController')->parameters(
         ['students' => 'id']
     );
-    Route::resource('profile','Teacher\ProfileController')->parameters(
+    Route::resource('teacher/profile','Teacher\ProfileController')->parameters(
         ['profile' => 'id']
     );
 });

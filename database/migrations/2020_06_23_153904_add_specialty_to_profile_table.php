@@ -25,7 +25,7 @@ class AddSpecialtyToProfileTable extends Migration
      */
     public function down()
     {
-        Schema::table('Profiles', function (Blueprint $table) {
+        Schema::table('profiles', function (Blueprint $table) {
             $table->dropColumn('speciality');
         });
     }

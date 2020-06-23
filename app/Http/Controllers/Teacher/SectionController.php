@@ -128,7 +128,7 @@ class SectionController extends Controller
         }
         $section->save();
 
-        return response()->json(['alert' => 'Section has been Added with success']);
+        return response()->json(['alert' => 'Le questionnaire a été ajouté avec succès']);
 
     }
 
@@ -185,7 +185,7 @@ class SectionController extends Controller
             $section->image=$filename;
         }
         $section->update();
-        return response()->json(['alert' => 'Section has been updated with success']);
+        return response()->json(['alert' => 'Le questionnaire a été modifié avec succès']);
     }
 
     /**

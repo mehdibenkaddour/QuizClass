@@ -125,10 +125,7 @@ class TopicController extends Controller
         
         $topic->save();
 
-        // flash the session
-        $request->session()->flash('status', 'Topic has been added with success');
-
-        return response()->json(['alert' => 'Topic has been added with success']);
+        return response()->json(['alert' => 'Le module a été ajouté avec succès']);
 
     }
 
@@ -183,7 +180,7 @@ class TopicController extends Controller
             $topic->image=$filename;
         }
         $topic->update();
-        return response()->json(['alert' => 'Topic has been updated with success']);
+        return response()->json(['alert' => 'Le module a été modifié avec succès']);
     }
 
     /**

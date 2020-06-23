@@ -50,16 +50,24 @@ Route::group(['middleware' => ['auth','admin']], function () {
     ]);
     Route::resource('topics','Teacher\TopicController')->parameters(
         ['topics' => 'id']
-    );
+    )->names([
+        'index' => 'topics.index'
+    ]);
     Route::resource('sections','Teacher\SectionController')->parameters(
         ['sections' => 'id']
-    );
+    )->names([
+        'index' => 'sections.index'
+    ]);
     Route::resource('questions','Teacher\QuestionController')->parameters(
         ['questions' => 'id']
-    );
+    )->names([
+        'index' => 'questions.index'
+    ]);
     Route::resource('students','Teacher\StudentController')->parameters(
         ['students' => 'id']
-    );
+    )->names([
+        'index' => 'students.index'
+    ]);;
     Route::resource('teacher/profile','Teacher\ProfileController')->parameters(
         ['profile' => 'id']
     );

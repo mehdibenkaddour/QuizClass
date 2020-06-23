@@ -31,8 +31,11 @@ Welcome back {{ $user->name }}
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Modules</h5>
+                    <a href="{{ route('topics.index') }}">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Modules</h5>
+                    </a>
                     <span class="h2 font-weight-bold mb-0">{{$user->topics()->count()}}</span>
+                    
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -49,7 +52,9 @@ Welcome back {{ $user->name }}
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Quizzes</h5>
+                    <a href="{{ route('sections.index') }}">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Quizzes</h5>
+                    </a>
                     <span class="h2 font-weight-bold mb-0">{{$sections_count}}</span>
                   </div>
                   <div class="col-auto">
@@ -67,7 +72,9 @@ Welcome back {{ $user->name }}
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Etudiants</h5>
+                    <a href="{{ route('students.index') }}">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Etudiants</h5>
+                    </a>
                     <span class="h2 font-weight-bold mb-0">{{$students_count}}</span>
                   </div>
                   <div class="col-auto">
@@ -85,7 +92,9 @@ Welcome back {{ $user->name }}
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <h5 class="card-title text-uppercase text-muted mb-0">Questions</h5>
+                    <a href="{{ route('questions.index') }}">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Questions</h5>
+                    </a>
                     <span class="h2 font-weight-bold mb-0">{{$questions_count}}</span>
                   </div>
                   <div class="col-auto">

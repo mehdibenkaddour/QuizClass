@@ -80,7 +80,7 @@ ITerview
               </div>
             </div>
             <div class="card-body">
-              <form method="POST" action="{{url("/profile")}}/{{$user->profile->id}}" enctype="multipart/form-data">
+              <form method="POST" action="{{url("/teacher/profile")}}/{{$user->profile->id}}" enctype="multipart/form-data">
               <input type="hidden" name="_method" value="PUT">
               @csrf
                 <div class="pl-lg-4">

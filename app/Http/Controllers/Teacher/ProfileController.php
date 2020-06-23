@@ -126,7 +126,7 @@ class ProfileController extends Controller
             $profile->image=$filename;
         }
         $profile->update();
-        return redirect('/profile');
+        return redirect('/teacher/profile');
 
     }
 

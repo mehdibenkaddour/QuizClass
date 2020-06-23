@@ -77,10 +77,8 @@ Gestion des sujets
       </div>
       <div class="form-group">
        <label>L'image</label>
-        <div class="custom-file">
-            <input type="file" name="image" class="custom-file-input" id="edit-image">
-            <label class="custom-file-label" for="image">Choisissez l'image</label>
-        </div>
+       <input type="file" name="image" class="section-img" id="edit-image">
+
         <span class="text-danger">
               <strong id="edit-image-error"></strong>
         </span>
@@ -142,10 +140,7 @@ Gestion des sujets
       </div>
       <div class="form-group">
        <label>L'image</label>
-        <div class="custom-file">
-            <input type="file" name="image" class="custom-file-input" id="add-image">
-            <label class="custom-file-label" for="image">Choisissez l'image</label>
-        </div>
+       <input type="file" name="image" class="section-img" id="add-image">
         <span class="text-danger">
               <strong id="add-image-error"></strong>
         </span>
@@ -169,9 +164,9 @@ Gestion des sujets
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">Liste des sujets</h3>
+    <h3 class="mb-0">Liste des quizzes</h3>
     <button class="btn btn-primary float-right add">
-      Ajouter un sujet
+      Ajouter un quiz
       <i class="ni ni-fat-add"></i>
     </button>
   </div>
@@ -191,7 +186,7 @@ Gestion des sujets
     <table class="table align-items-center table-flush" id="sectionsTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Sujet</th>
+          <th scope="col">Quiz</th>
           <th scope="col">Module</th>
           <th scope="col">Actions</th>
         </tr>
@@ -214,6 +209,9 @@ Gestion des sujets
 <script>
 
 $(document).ready(function() {
+  // init dropify
+  $('.section-img').dropify();
+
   let topicIdParam = $("#moduleSelect").val()
 
   const table = handleSectionsLoad();

@@ -215,10 +215,7 @@ ITerview
 
       <div class="form-group">
        <label>L'image</label>
-        <div class="custom-file">
-            <input type="file" name="image" class="custom-file-input" id="add-image">
-            <label class="custom-file-label" for="image">Choisissez l'image</label>
-        </div>
+       <input type="file" name="image" class="question-img" id="add-image">
         <span class="text-danger">
               <strong id="add-image-error"></strong>
         </span>
@@ -442,7 +439,9 @@ ITerview
 <script>
 
 $(document).ready(function() {
- 
+  // init dropify
+  $('.question-img').dropify();
+
   const myTextArea = document.getElementById("code-1");
   const myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
             mode: "javascript",

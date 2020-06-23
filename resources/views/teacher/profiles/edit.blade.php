@@ -140,9 +140,7 @@ ITerview
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label class="form-control-label" for="university">L'image</label>
-                        <div class="custom-file">
-                        <input type="file" name="image" class="custom-file-input" id="add-image">
-                        <label class="custom-file-label" for="image">Choisissez l'image</label>
+                        <input type="file" name="image" class="profile-img" id="add-image">
                         @error('image')
                             <span>
                                         <strong>{{ $message }}</strong>
@@ -153,13 +151,16 @@ ITerview
                       </div>
                     </div>
                   </div>
-                </div>
-                <hr class="my-4" />
-                <!-- Description -->
-                <div class="pl-lg-4">
-                  <div class="form-group">
-                    <label class="form-control-label" for="about">About Me</label>
-                    <textarea name="about" rows="4" class="form-control" placeholder="A few words about you ...">{{$user->profile->about}}</textarea>
+                  <!-- Description -->
+                  <div class="pl-lg-4">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <label class="form-control-label" for="about">About Me</label>
+                          <textarea name="about" rows="4" class="form-control" placeholder="A few words about you ...">{{$user->profile->about}}</textarea>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary float-right">Edit</button>
@@ -176,6 +177,11 @@ ITerview
 <script src="{{ asset('js/iterview.js') }}"></script>
 
 <script>
+
+$(document).ready(function() {
+  // init dropify
+  $('.profile-img').dropify();
+})
 
 </script>
 

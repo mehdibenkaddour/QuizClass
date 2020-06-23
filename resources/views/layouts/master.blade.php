@@ -32,6 +32,9 @@
   <!--CodeMirror -->
   <link rel="stylesheet" href="{{asset('lib/codemirror.css')}}">
   <link rel="stylesheet" href="{{asset('theme/material-darker.css')}}">
+
+  {{-- Dropfiy --}}
+  <link rel="stylesheet" href="{{asset('css/dropify.min.css')}}">
   
 </head>
 
@@ -79,7 +82,7 @@
             <li class="nav-item">
               <a class="nav-link {{ 'sections' == request()->path() ? 'active' : ''}}" href="{{route('sections.index')}}">
                 <i class="ni ni-single-copy-04 text-yellow"></i>
-                <span class="nav-link-text">Sujets</span>
+                <span class="nav-link-text">Quizzes</span>
               </a>
             </li>
             <li class="nav-item">
@@ -348,7 +351,9 @@
   <script src="{{asset('lib/codemirror.js')}}"></script>
   <script src="{{asset('mode/javascript/javascript.js')}}"></script>
 
+  {{-- Dropify --}}
   <!-- Custom scripts -->
+  <script src="{{asset('js/dropify.min.js')}}"></script>
   @yield('scripts')
 </body>
 

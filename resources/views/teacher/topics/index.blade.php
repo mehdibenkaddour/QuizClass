@@ -69,10 +69,7 @@ Gestion des modules
       </div>
       <div class="form-group">
        <label>L'image</label>
-        <div class="custom-file">
-            <input type="file" name="image" class="custom-file-input" id="edit-image">
-            <label class="custom-file-label" for="image">Choisissez l'image</label>
-        </div>
+       <input type="file" name="image" class="module-image" id="edit-image" />
         <span class="text-danger">
               <strong id="edit-image-error"></strong>
         </span>
@@ -122,10 +119,7 @@ Gestion des modules
       </div>
       <div class="form-group">
        <label>L'image</label>
-        <div class="custom-file">
-            <input type="file" name="image" class="custom-file-input" id="add-image">
-            <label class="custom-file-label" for="image">Choisissez l'image</label>
-        </div>
+        <input type="file" name="image" class="module-image" id="add-image">
         <span class="text-danger">
               <strong id="add-image-error"></strong>
         </span>
@@ -160,12 +154,12 @@ Gestion des modules
     <table class="table align-items-center table-flush" id="topicsTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Le Sujet</th>
-          <th scope="col">Le code d'accés</th>
-          <th scope="col">Les actions</th>
+          <th scope="col">Module</th>
+          <th scope="col">Code d'accés</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
-      <tbody class="list table-hover">
+      <tbody class="list">
         {{-- Magic happens here ssi l7aj ! no data !! but there is ! thanks to ajax ;-) --}}
       </tbody>
     </table>
@@ -181,6 +175,8 @@ Gestion des modules
 
 <script>
 $(document).ready(function() {
+  // init dropify
+  $('.module-image').dropify();
 
   // datatable
   const table = handleTopicLoad();

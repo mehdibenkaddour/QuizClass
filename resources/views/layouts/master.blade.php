@@ -51,7 +51,7 @@
           <!-- Nav items -->
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link {{ 'teacher' == request()->path() ? 'active' : ''}}" href="{{ route('teacher') }}">
+              <a class="nav-link {{ 'teacher' == request()->path() ? 'active' : ''}}" href="{{ route('profile.index') }}">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Tableau de bord</span>
               </a>
@@ -149,7 +149,7 @@
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link pr-0" href="{{route('profile.index')}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img alt="Image placeholder" src="/uploads/profiles/{{ Auth::user()->profile->image }}">
@@ -163,9 +163,14 @@
                 <div class="dropdown-header noti-title">
                   <h6 class="text-overflow m-0">Welcome!</h6>
                 </div>
-                <a href="{{ url('/profile') }}" class="dropdown-item">
+                <a href="{{url("teacher/profile")}}" class="dropdown-item">
                   <i class="ni ni-single-02"></i>
                   <span>Mon profile</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{{url("teacher/profile")}}/{{Auth::user()->profile->id}}/edit" class="dropdown-item">
+                  <i class="ni ni-settings-gear-65"></i>
+                  <span>Edit profile</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a 
@@ -185,7 +190,7 @@
         </div>
       </div>
     </nav>
-    @if(request()->path() != 'profile')
+    @if(!request()->is('teacher/profile/*/edit'))
     <!-- Header -->
     <!-- Header -->
     <div class="header bg-primary pb-6">

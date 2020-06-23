@@ -89,3 +89,41 @@ img.navbar-brand-img {
 .dd-options {
     width: 300px !important;
 }
+
+/* PROFILE */
+
+.quizclass-profile-wrapper img {
+    width: 130px;
+    height: 130px;
+    border-radius: 100px;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+}
+
+.quizclass-profile-wrapper h3 {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.quizclass-profile-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.quizclass-profile-wrapper .about {
+    margin-left: 2rem;
+}
+
+.quizclass-profile-wrapper .job-title {
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.quizclass-profile-wrapper .university {
+    font-weight: 300;
+}
+
+.profile-center {
+    display: flex;
+    align-items: center;
+}

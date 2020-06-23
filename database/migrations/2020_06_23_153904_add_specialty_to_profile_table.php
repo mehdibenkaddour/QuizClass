@@ -14,7 +14,7 @@ class AddSpecialtyToProfileTable extends Migration
     public function up()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->string('speciality');
+            $table->string('speciality')->nullable();
         });
     }
 

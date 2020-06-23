@@ -14,7 +14,7 @@ class AddUniversityToProfileTable extends Migration
     public function up()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->string('university');
+            $table->string('university')->nullable();
         });
     }
 

@@ -22,7 +22,7 @@ class CreateProfilesTable extends Migration
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->string('image');
-            $table->string('about');
+            $table->string('about')->nullable();
             $table->timestamps();
         });
     }

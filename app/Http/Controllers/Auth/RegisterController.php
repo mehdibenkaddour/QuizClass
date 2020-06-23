@@ -72,7 +72,7 @@ class RegisterController extends Controller
         ]);
         $profile= new Profile();
         $profile->user_id=$user->id;
-        $profile->image='default';
+        $profile->image='default.png';
         $profile->save();
         return $user;
     }

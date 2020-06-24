@@ -10,6 +10,9 @@ class Progress extends Model
         'user_id', 'section_id','score',
     ];
 
+    // for postgre timestamp probleme
+    public $keyType = 'string';
+
     public function user(){
         return $this->belongsTo('App\User');
     }

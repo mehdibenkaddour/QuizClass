@@ -97,14 +97,14 @@
           <hr class="my-3">
           <!-- Heading -->
           <h6 class="navbar-heading p-0 text-muted">
-            <span class="docs-normal">Les données</span>
+            <span class="docs-normal">Données</span>
           </h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <a class="nav-link" href="#" target="_blank">
+              <a class="nav-link" href="{{ route('results') }}">
                 <i class="ni ni-chart-bar-32"></i>
-                <span class="nav-link-text">Les statistiques</span>
+                <span class="nav-link-text">Résultat</span>
               </a>
             </li>
           </ul>

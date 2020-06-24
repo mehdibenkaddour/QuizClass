@@ -22,6 +22,9 @@ Route::group(['middleware' => ['auth','admin']], function () {
     Route::get('/teacher', function(){
         return redirect('/teacher/profile');;
     })->name('teacher');
+
+    // result
+    Route::get('/results', 'Teacher\ResultController@index')->name('results');
     
     // users table [ajax only]
     Route::get('/ajax/users', 'Teacher\UserController@ajaxUsers')->name('ajax.users');

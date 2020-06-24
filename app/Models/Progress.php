@@ -11,7 +11,7 @@ class Progress extends Model
     ];
 
     // for postgre timestamp probleme
-    public $keyType = 'string';
+    // public $keyType = 'string';
 
     public function user(){
         return $this->belongsTo('App\User');

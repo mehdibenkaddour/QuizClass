@@ -43,7 +43,7 @@ class ResultController extends Controller
         if(count($foundTopic) > 0 && count($foundSection) > 0 ){
             $result=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
             ->join('users', 'enrolls.user_id', '=', 'users.id')
-            ->select('users.name','users.email','progresses.score')
+            ->select('users.id', 'users.name','users.email','progresses.score')
             ->groupBy('users.id')->get();
             // ->whereRaw("progresses.created_at = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id') OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")->get();
         }

@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth','admin']], function () {
     Route::get('/ajax/questions', 'Teacher\QuestionController@ajaxQuestions')->name('ajax.questions');
     // Students table [ajax only]
     Route::get('/ajax/students', 'Teacher\StudentController@ajaxStudents')->name('ajax.students');
+    // Results table [ajax only]
+    Route::get('/ajax/results', 'Teacher\ResultController@ajaxResults')->name('ajax.results');
     
     Route::get('/sections/get/{id}', 'Teacher\QuestionController@getSections');
 

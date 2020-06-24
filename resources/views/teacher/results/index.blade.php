@@ -24,6 +24,20 @@ Résultats
 
     {{-- Quiz select --}}
     <div id="quizSelect"></div>
+    {{-- Table result --}}
+    <div class="table-responsive">
+    <table class="table align-items-center table-flush" id="resultsTable">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody class="list">
+        {{-- Magic happens here ssi l7aj ! no data !! but there is ! thanks to ajax ;-) --}}
+      </tbody>
+    </table>
+  </div>
   </div>
 
 </div>
@@ -107,7 +121,46 @@ $(document).ready(function() {
 
     return data;
   }
+  handleQuestionsLoad();
+
+  function handleQuestionsLoad() {
+      const table = $('#resultsTable').DataTable({
+        processing: true,
+        serverSide: true,
+        language: {
+            "lengthMenu": "Afficher _MENU_ éléments",
+            "sInfo":"Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+            "zeroRecords": "Aucune resultas",
+            "search": "Rechercher",
+            "oPaginate": {
+                "sNext":     "Suivant",
+                "sPrevious": "Précédent"
+    },
+        },
+        ajax: {
+          url: "{{route('ajax.results')}}",
+          type:'GET',
+          data: function (d) {
+          d.search=(".dataTables_filter input[type=search]").value;
+          d.topic_id = get('topic_id');
+          d.section_id = get('section_id');
+          }
+
+        },
+        columns: [
+            { data: 'name', name: 'name'},
+            { data: 'score', name: 'score'}
+        ]
+    });
+
+    return table
+
+  }
 
 })
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}
 </script>
 @endsection

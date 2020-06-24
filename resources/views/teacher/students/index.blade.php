@@ -44,6 +44,8 @@ Gestion des étudiants
   <div class="card-header border-0">
     <h3 class="mb-0">La Liste des étudiants</h3>
   </div>
+
+  <div class="card-body">
   @if (!$topic_id && count($topics) > 0)
     <select id="moduleSelect">
       @foreach ($topics as $topic)
@@ -55,6 +57,7 @@ Gestion des étudiants
       @endforeach
     </select>
   @endif
+  </div>
 
   <!-- Light table -->
   <div class="table-responsive">

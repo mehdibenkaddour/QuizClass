@@ -80,14 +80,16 @@ img.navbar-brand-img {
     border-radius: 5px !important;
 }
 
-#moduleSelect {
-    margin: 0 0 1.25rem 1.25rem;
-}
-
 .dd-option-text {
     line-height: 50px !important;
     margin-left: 10px;
     margin-bottom: 0;
+}
+
+.dd-container {
+    display: inline-block !important;
+    width: 350px !important;
+    margin-right: 20px;
 }
 
 .dd-select,

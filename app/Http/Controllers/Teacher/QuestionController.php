@@ -96,7 +96,7 @@ class QuestionController extends Controller
      this method for geting section of topics used in dynamic dropdown menu 
     */
     public function getSections($id){
-        $sections= Section::where("topic_id",$id)->pluck("label","id");
+        $sections= Section::where("topic_id",$id)-;
         return json_encode($sections);
     }
     /**

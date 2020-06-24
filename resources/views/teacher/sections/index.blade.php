@@ -170,6 +170,7 @@ Gestion des sujets
       <i class="ni ni-fat-add"></i>
     </button>
   </div>
+  <div class="card-body">
   @if (!$topic_id && count($topics) > 0)
     <select id="moduleSelect">
       @foreach ($topics as $topic)
@@ -181,6 +182,7 @@ Gestion des sujets
       @endforeach
     </select>
   @endif
+  </div>
   <!-- Light table -->
   <div class="table-responsive">
     <table class="table align-items-center table-flush" id="sectionsTable">

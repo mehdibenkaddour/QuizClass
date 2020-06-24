@@ -44,7 +44,7 @@ class ResultController extends Controller
             $result=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
             ->join('users', 'enrolls.user_id', '=', 'users.id')
             ->select('users.name','users.email','progresses.score')
-            ->whereRaw("progresses.created_at::timestamp = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id')::timestamp OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")->get();
+            ->whereRaw("progresses.created_at::timestamp = (select min(to_timestamp(`created_at`)) from progresses where user_id = users.id AND section_id = '$section_id')::timestamp OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")->get();
 
         }
         foreach($result as $re){

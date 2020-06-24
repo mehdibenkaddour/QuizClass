@@ -37,13 +37,14 @@ class StudentController extends Controller
 
         $teacherTopics = $request->user()->topics()->select('id')->get()->toArray();
 
-        $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
+        // $topic_id = (!empty($_GET["topic_id"])) ? ($_GET["topic_id"]) : ('');
+
+        $topic_id = $request->query('topic_id');
         
         $result = array();
         
-        if ($topic_id && count($teacherTopics) > 0 && in_array($topic_id, $teacherTopics[0])) {
-            $result=Enroll::where('topic_id','=',$topic_id)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
-        }
+        if (!is_null($topic_id) && count($teacherTopics) > 0 && in_array($topic_id, $teacherTopics[0])) {
+            $result=Enroll::where('topic_id','=',$topic_id)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');        }
         
         return Datatables::of($result)
 

@@ -7,7 +7,7 @@ Gestion des sujets
 @section('content')
 @component('teacher.helpers.modal')
     @slot('title')
-        Supprimer un élement
+        Supprimer un quiz
     @endslot
     
     @slot('modalId')
@@ -23,7 +23,7 @@ Gestion des sujets
     @endslot
 
     @slot('content')
-    Voulez-vous vraiment supprimer cet élement !
+    Voulez-vous vraiment supprimer ce quiz !
     @endslot
 
     @slot('cancel')
@@ -44,7 +44,7 @@ Gestion des sujets
 
 @component('teacher.helpers.modal')
     @slot('title')
-    Modifier un élement
+    Modifier un quiz
     @endslot
 
     @slot('modalId')
@@ -61,14 +61,14 @@ Gestion des sujets
 
     @slot('content')
       <div class="form-group">
-        <label>Le titre</label>
+        <label>Titre</label>
         <input type="text" name="label" value="" class="form-control" id="edit-label">
         <span class="text-danger">
             <strong id="edit-label-error"></strong>
         </span>
       </div>
       <div class="form-group">
-        <label>Le sujet</label>
+        <label>Module</label>
         <select class="browser-default custom-select" name="edit-topic" id="edit-topic">
         @foreach($topics as $topic )
         <option value="{{$topic->id}}">{{$topic->label}}</option>
@@ -76,7 +76,7 @@ Gestion des sujets
         </select>
       </div>
       <div class="form-group">
-       <label>L'image</label>
+       <label>Image</label>
        <input type="file" name="image" class="section-img" id="edit-image">
 
         <span class="text-danger">
@@ -103,7 +103,7 @@ Gestion des sujets
 
 @component('teacher.helpers.modal')
     @slot('title')
-    Ajouter un élement
+    Ajouter un quiz
     @endslot
 
     @slot('modalId')
@@ -120,16 +120,16 @@ Gestion des sujets
 
     @slot('content')
       <div class="form-group">
-        <label>Le titre</label>
+        <label>Titre</label>
         <input type="text" name="add-label" value="" class="form-control" id="add-label">
         <span class="text-danger">
             <strong id="add-label-error"></strong>
         </span>
       </div>
       <div class="form-group">
-       <label>Le sujet</label>
+       <label>Module</label>
        <select class="browser-default custom-select" name="add-topic" id="add-topic">
-        <option selected disabled>Choisissez un sujet</option>
+        <option selected disabled>Choisissez un module</option>
         @foreach($topics as $topic )
         <option value="{{$topic->id}}">{{$topic->label}}</option>
         @endforeach

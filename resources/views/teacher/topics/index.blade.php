@@ -23,7 +23,7 @@ Gestion des modules
     @endslot
 
     @slot('content')
-    Voulez-vous vraiment supprimer ce sujet !
+    Voulez-vous vraiment supprimer ce module !
     @endslot
 
     @slot('cancel')

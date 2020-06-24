@@ -159,7 +159,7 @@ class QuestionController extends Controller
             }
         }
 
-        return response()->json(['alert' => 'Section has been Added with success']);
+        return response()->json(['alert' => 'La question a été ajouté avec succès']);
        }else if($request->input('type')==2){
         $messages = [
             'correct_answers.required' => 'you must select at least one of the answer as correct',
@@ -207,7 +207,7 @@ class QuestionController extends Controller
             }
         }
 
-        return response()->json(['alert' => 'Section has been Added with success']);
+        return response()->json(['alert' => 'La question a été ajouté avec succès']);
 
        }else{         
         $validator = Validator::make($request->all(), [
@@ -230,7 +230,7 @@ class QuestionController extends Controller
         $answer->correct=true;
         $answer->question_id=$question->id;
         $answer->save();
-        return response()->json(['alert' => 'Section has been Added with success']);
+        return response()->json(['alert' => 'La question a été ajouté avec succès']);
 
        }
     }

@@ -23,7 +23,7 @@ ITerview
     @endslot
 
     @slot('content')
-    Are you sure you wan't to delete this topic
+    Voulez-vous vraiment supprimer ce question
     @endslot
 
     @slot('cancel')

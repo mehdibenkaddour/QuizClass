@@ -68,11 +68,15 @@ img.navbar-brand-img {
 
 .dd-select label {
     margin-bottom: 0 !important;
+    margin-left: 10px;
     line-height: 50px !important;
+    font-family: Open Sans, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .dd-select {
-    background: rgb(251, 251, 251) !important;
+    background: #fff !important;
     border-radius: 5px !important;
 }
 
@@ -82,12 +86,18 @@ img.navbar-brand-img {
 
 .dd-option-text {
     line-height: 50px !important;
+    margin-left: 10px;
     margin-bottom: 0;
 }
 
 .dd-select,
 .dd-options {
-    width: 300px !important;
+    width: 350px !important;
+}
+
+.dd-option-image,
+.dd-selected-image {
+    border-radius: 100% !important;
 }
 
 /* PROFILE */
@@ -126,4 +136,11 @@ img.navbar-brand-img {
 .profile-center {
     display: flex;
     align-items: center;
+}
+
+.status {
+    background: #8cffc4;
+    padding: 3px 12px;
+    border-radius: 28px;
+    color: #0c0c0c;
 }

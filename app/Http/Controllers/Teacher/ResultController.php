@@ -36,12 +36,19 @@ class ResultController extends Controller
     public function ajaxResults(Request $request) {
         $topic_id = $request->query('topic_id');
         $section_id = $request->query('section_id');
+        $questionsCount=Section::find($section_id)->questions->count();
         $foundTopic = Topic::where('user_id', '=', $request->user()->id)->where('id', '=', $topic_id)->get()->toArray();
         $foundSection=Section::where('topic_id','=',$topic_id)->where('id','=',$section_id)->get()->toArray();
         $result = array();
         if(count($foundTopic) > 0 && count($foundSection) > 0 ){
-            $result=Progress::where('section_id','=',$section_id)->rightJoin('users', 'progresses.user_id', '=', 'users.id')
-                    ->select('users.name','users.email','progresses.score')->whereRaw("progresses.created_at = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id')");
+            $result=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
+            ->join('users', 'enrolls.user_id', '=', 'users.id')
+            ->select('users.name','users.email','progresses.score')
+            ->whereRaw("progresses.created_at = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id') OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")->get();
+
+        }
+        foreach($result as $re){
+            $re->questionsCount= $questionsCount;
         }
         return Datatables::of($result)
 
@@ -56,10 +63,18 @@ class ResultController extends Controller
         })
 
         ->addColumn('score', function ($model) {
+            if($model->score==null)
+                    return '
+            <div class="media align-items-center">
+                <div class="media-body">
+                  <span class="name mb-0 text-sm" id="sectionLabel"> Pas encore </span>
+                </div>
+            </div>
+            ';
             return '
             <div class="media align-items-center">
                 <div class="media-body">
-                  <span class="name mb-0 text-sm" id="sectionLabel">' . $model->score . '</span>
+                  <span class="name mb-0 text-sm" id="sectionLabel">' . $model->score . ' / '. $model->questionsCount .'</span>
                 </div>
             </div>
             ';

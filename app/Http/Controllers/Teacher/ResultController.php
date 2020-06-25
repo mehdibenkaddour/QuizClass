@@ -56,7 +56,7 @@ class ResultController extends Controller
 
             ->whereRaw("progresses.attempt = 1 OR (progresses.score IS NULL AND progresses.section_id != '$section_id')")
 
-            ->selectRaw('users.id, users.name, users.email, progresses.score, progresses.section_id')
+            ->selectRaw('users.id, users.name, users.email, progresses.score, progresses.section_id, progresses.attempt')
 
             ->get();
 

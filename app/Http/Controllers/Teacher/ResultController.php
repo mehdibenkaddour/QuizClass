@@ -70,10 +70,16 @@ class ResultController extends Controller
 
 
         // filter more
+        $resultToReturn = array();
 
         foreach($result as $row) {
             if($row->section_id != $section_id . "") {
-                $row->score = NULL;
+                $checkIfUserHasReallyAProgress = Enroll::whereRaw("section_id = '$section_id' AND user_id = '$row->id'")->count();
+                if(count == 0) {
+                    $row->score = NULL;
+                } else {
+                    $row->score = 'REMOVE ME PLEASE';
+                }
             }
         } 
 

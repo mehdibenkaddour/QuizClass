@@ -24,21 +24,22 @@ Résultats
 
     {{-- Quiz select --}}
     <div id="quizSelect"></div>
+  </div>
+
     {{-- Table result --}}
     <div class="table-responsive">
-    <table class="table align-items-center table-flush" id="resultsTable">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Score</th>
-        </tr>
-      </thead>
-      <tbody class="list">
-        {{-- Magic happens here ssi l7aj ! no data !! but there is ! thanks to ajax ;-) --}}
-      </tbody>
-    </table>
-  </div>
-  </div>
+      <table class="table align-items-center table-flush" id="resultsTable">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody class="list">
+          {{-- Magic happens here ssi l7aj ! no data !! but there is ! thanks to ajax ;-) --}}
+        </tbody>
+      </table>
+    </div>
 
 </div>
 @endsection
@@ -51,7 +52,10 @@ $(document).ready(function() {
 
   let topicIdParam = $("#moduleSelect").val()
 
-  let sectionIdParam = undefined
+  let sectionIdParam = -1
+
+
+  const table = handleResultLoad();
 
   // ddslick modules
   $("#moduleSelect").ddslick({
@@ -81,6 +85,7 @@ $(document).ready(function() {
 
   function populateDataQuizSelect(ddData) {
     $('#quizSelect').ddslick('destroy')
+
     // ddslick quizzes
     $('#quizSelect').ddslick({
       data: ddData,
@@ -96,6 +101,11 @@ $(document).ready(function() {
           sectionIdParam = data.selectedData.value
           console.log('topic_id: ', topicIdParam)
           console.log('section_id: ', sectionIdParam)
+  
+          const url = "{{route('ajax.results')}}" + '?topic_id=' + topicIdParam + '&section_id=' + sectionIdParam
+          table.ajax.url(url)
+          table.ajax.reload();
+          console.log(table.ajax.url())
       }   
     });
   }
@@ -128,7 +138,7 @@ $(document).ready(function() {
     return data;
   }
 
-  const table = handleResultLoad();
+
 
   function handleResultLoad() {
       const topicIdGET = "{{ $topic_id }}"
@@ -139,7 +149,7 @@ $(document).ready(function() {
       if(topicIdGET && sectionIdGET) {
         url = "{{route('ajax.results')}}" + '?topic_id=' + topicIdGET + '&section_id=' + sectionIdGET
       } else {
-
+        url = "{{route('ajax.results')}}"
       }
 
       const table = $('#resultsTable').DataTable({

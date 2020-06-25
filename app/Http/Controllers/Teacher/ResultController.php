@@ -35,16 +35,29 @@ class ResultController extends Controller
     }
     public function ajaxResults(Request $request) {
         $topic_id = $request->query('topic_id');
+
         $section_id = $request->query('section_id');
-        $questionsCount=Section::find($section_id)->questions->count();
+
+
         $foundTopic = Topic::where('user_id', '=', $request->user()->id)->where('id', '=', $topic_id)->get()->toArray();
-        $foundSection=Section::where('topic_id','=',$topic_id)->where('id','=',$section_id)->get()->toArray();
+
+        $foundSection = Section::where('topic_id','=',$topic_id)->where('id','=',$section_id)->get()->toArray();
+
         $result = array();
-        if(count($foundTopic) > 0 && count($foundSection) > 0 ){
-            $result=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
+
+
+        if(count($foundTopic) > 0 && count($foundSection) > 0 ) {
+
+            $result = Enroll::where('topic_id','=',$topic_id)
+
+            ->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
+
             ->join('users', 'enrolls.user_id', '=', 'users.id')
-            ->select('progresses.created_at', 'users.name','users.email','progresses.score')
-            // ->selectRaw('users.id, users.name, users.email, progresses.score')
+
+            ->whereRaw("(progresses.attempt = 1 AND progresses.section_id = '$section_id') OR progresses.score IS NULL")
+
+            ->selectRaw('users.id, users.name, users.email, progresses.score, progresses.section_id')
+
             ->get();
 
             // ->get();
@@ -53,9 +66,23 @@ class ResultController extends Controller
             // ->whereRaw("progresses.created_at = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id') OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")
         }
 
+
+        // filter more
+
+        // foreach($result as $row) {
+        //     if($row->section_id != $section_id . "") {
+        //         $row->score = NULL;
+        //     }
+        // } 
+
+        // add question count or the result
+
+        $questionsCount = Section::find($section_id)->questions->count();
+
         foreach($result as $re){
             $re->questionsCount= $questionsCount;
         }
+
         return Datatables::of($result)
 
         ->addColumn('name', function ($model) {

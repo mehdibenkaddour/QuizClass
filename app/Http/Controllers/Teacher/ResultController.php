@@ -29,7 +29,7 @@ class ResultController extends Controller
         $imgUrl = url('/uploads/sections/');
 
         $sections= DB::table('sections')
-        ->selectRaw("id as value, label as text, concat('" . $imgUrl . "/', image) as imageSrc")
+        ->selectRaw("id as value, label as text, concat('" . $imgUrl . "/', image) as 'imageSrc'")
         ->where("topic_id",$id)
         ->get();
 

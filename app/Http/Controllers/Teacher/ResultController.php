@@ -74,7 +74,7 @@ class ResultController extends Controller
 
         foreach($result as $row) {
             if($row->section_id != $section_id . "") {
-                $checkIfUserHasReallyAProgress = Enroll::whereRaw("section_id = '$section_id' AND user_id = '$row->id'")->count();
+                $checkIfUserHasReallyAProgress = Progress::whereRaw("section_id = '$section_id' AND user_id = '$row->id'")->count();
                 if(count == 0) {
                     $row->score = NULL;
                 } else {

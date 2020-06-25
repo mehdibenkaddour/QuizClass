@@ -144,7 +144,7 @@ img.navbar-brand-img {
 .status-not-yet,
 .status-good,
 .status-not-bad,
-.status-not-bad {
+.status-bad {
     background: #e0e0e0;
     padding: 3px 12px;
     border-radius: 28px;

@@ -69,10 +69,6 @@ class ResultController extends Controller
             ->get();
         }
 
-
-        // filter more
-        $resultToReturn = array();
-
         foreach($result as $key => $row) {
             if($row->section_id != $section_id . "") {
                 $checkIfUserHasReallyAProgress = Progress::whereRaw("section_id = '$section_id' AND user_id = '$row->id'")->count();

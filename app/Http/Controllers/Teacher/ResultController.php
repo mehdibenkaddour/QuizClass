@@ -69,11 +69,11 @@ class ResultController extends Controller
 
         // filter more
 
-        foreach($result as $row) {
-            if($row->section_id != $section_id . "") {
-                $row->score = NULL;
-            }
-        } 
+        // foreach($result as $row) {
+        //     if($row->section_id != $section_id . "") {
+        //         $row->score = NULL;
+        //     }
+        // } 
 
         // add question count or the result
 

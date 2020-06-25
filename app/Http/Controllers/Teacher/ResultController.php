@@ -50,7 +50,9 @@ class ResultController extends Controller
 
             $result = Enroll::where('topic_id','=',$topic_id)
 
-            ->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
+            ->leftJoin('progresses', function($join) {
+                $join->on('enrolls.user_id','=','progresses.user_id');
+            })
 
             ->join('users', 'enrolls.user_id', '=', 'users.id')
 
@@ -69,11 +71,11 @@ class ResultController extends Controller
 
         // filter more
 
-        // foreach($result as $row) {
-        //     if($row->section_id != $section_id . "") {
-        //         $row->score = NULL;
-        //     }
-        // } 
+        foreach($result as $row) {
+            if($row->section_id != $section_id . "") {
+                $row->score = NULL;
+            }
+        } 
 
         // add question count or the result
 

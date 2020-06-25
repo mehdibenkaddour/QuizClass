@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ResultController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         $topics = Auth::user()->topics;
 
         return View('teacher.results.index')
         ->with('topics', $topics);
+        ->with('topic_id', $request->query('topic_id'))
+        ->with('section_id', $request->query('section_id'))
     }
 
     public function getSections($id) {

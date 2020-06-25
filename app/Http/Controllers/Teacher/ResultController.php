@@ -16,16 +16,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ResultController extends Controller
 {
-    public function index(Request $request) {
+    public function index() {
         $topics = Auth::user()->topics;
 
-        $topic_id = $request->query('topic_id');
-
-        $section_id = $request->query('section_id');
-
         return View('teacher.results.index')
-        ->with('topic_id', $topic_id)
-        ->with('section_id', $section_id)
         ->with('topics', $topics);
     }
 
@@ -41,56 +35,67 @@ class ResultController extends Controller
     }
     public function ajaxResults(Request $request) {
         $topic_id = $request->query('topic_id');
-
         $section_id = $request->query('section_id');
-
-
+        $questionsCount;
         $foundTopic = Topic::where('user_id', '=', $request->user()->id)->where('id', '=', $topic_id)->get()->toArray();
-
-        $foundSection = Section::where('topic_id','=',$topic_id)->where('id','=',$section_id)->get()->toArray();
-
+        $foundSection=Section::where('topic_id','=',$topic_id)->where('id','=',$section_id)->get()->toArray();
         $result = array();
-
-
-        if(count($foundTopic) > 0 && count($foundSection) > 0 && Enroll::where('topic_id','=',$topic_id)->count() > 0) {
-
-            $result = Enroll::where('topic_id','=',$topic_id)
-
-            ->leftJoin('progresses', function($join) {
-                $join->on('enrolls.user_id','=','progresses.user_id');
-            })
-
-            ->join('users', 'enrolls.user_id', '=', 'users.id')
-
-            ->whereRaw("(progresses.attempt = 1 AND progresses.section_id = '$section_id') OR progresses.score IS NULL OR (progresses.attempt = 1 AND progresses.section_id != '$section_id')")
-
-            ->selectRaw('users.id, users.name, users.email, progresses.score, progresses.section_id, progresses.attempt')
-
-            ->get();
-        }
-
-        foreach($result as $key => $row) {
-            if($row->section_id != $section_id . "") {
-                $checkIfUserHasReallyAProgress = Progress::whereRaw("section_id = '$section_id' AND user_id = '$row->id'")->count();
-
-                if($checkIfUserHasReallyAProgress == 0) {
-                    $row->score = NULL;
-                } else {
-                    // remove it from the $result
-                    // $row->score = 'REMOVE ME PLEASE';
-                    unset($result[$key]);
+        $mami=[];
+        $tableIfSectionDiffrent=[];
+        $test=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
+        ->join('users', 'enrolls.user_id', '=', 'users.id')
+        ->select('users.id','users.name','users.email','progresses.score','progresses.created_at','enrolls.topic_id','progresses.section_id')->get();
+        $etat=0;
+        foreach($test as $te){
+            if($te->topic_id==$topic_id && $te->section_id==$section_id){
+            foreach($mami as $ma){
+                if($ma->id == $te->id){
+                    $etat=1;
+                    break;
+                }else{
+                    $etat=0;
                 }
             }
-        } 
+            if($etat==1){
+                continue;
+            }else{
+                foreach($test as $tam){
+                  if($tam->topic_id==$topic_id && $tam->section_id==$section_id){
+                    if($tam->id == $te->id && $tam->created_at < $te->created_at){
+                        $te->score=$tam->score;
+                        $te->created_at=$tam->created_at;
+                    }
+                 }
+                }
+                $mami[]=$te;
+                }
+            }
+        }
 
-        // add question count or the result
+        foreach($test as $te){
+            if($te->topic_id==$topic_id && $te->section_id!=$section_id && $te->section_id!=null){
+                $status=0;
+                foreach($mami as $ma){
+                    if($ma->id == $te->id){
+                        $status=1;
+                    }
+                }
+                if($status!=1){
+                    $te->score=null;
+                    $mami[]=$te;
+                }
+            }else if($te->topic_id==$topic_id && $te->section_id==null){
+                    $mami[]=$te;
+            }
+        }
+        if(count($foundTopic) > 0 && count($foundSection) > 0 ){
+            $result=$mami;
+            $questionsCount=Section::find($section_id)->questions->count();
 
-        $questionsCount = Section::find($section_id)->questions->count();
-
+        }
         foreach($result as $re){
             $re->questionsCount= $questionsCount;
         }
-
         return Datatables::of($result)
 
         ->addColumn('name', function ($model) {

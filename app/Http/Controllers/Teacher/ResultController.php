@@ -54,7 +54,7 @@ class ResultController extends Controller
 
             ->join('users', 'enrolls.user_id', '=', 'users.id')
 
-            ->whereRaw("(progresses.attempt = 1 AND progresses.section_id = '$section_id') OR progresses.score IS NULL")
+            ->whereRaw('progresses.attempt = 1 OR progresses.score IS NULL')
 
             ->selectRaw('users.id, users.name, users.email, progresses.score, progresses.section_id')
 
@@ -69,11 +69,11 @@ class ResultController extends Controller
 
         // filter more
 
-        // foreach($result as $row) {
-        //     if($row->section_id != $section_id . "") {
-        //         $row->score = NULL;
-        //     }
-        // } 
+        foreach($result as $row) {
+            if($row->section_id != $section_id . "") {
+                $row->score = NULL;
+            }
+        } 
 
         // add question count or the result
 

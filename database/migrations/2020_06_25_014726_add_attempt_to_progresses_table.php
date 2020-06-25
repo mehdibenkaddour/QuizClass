@@ -14,7 +14,7 @@ class AddAttemptToProgressesTable extends Migration
     public function up()
     {
         Schema::table('progresses', function (Blueprint $table) {
-            $table->boolean('attempt')->nullable();
+            $table->integer('attempt');
         });
     }
 

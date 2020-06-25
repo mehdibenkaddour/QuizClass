@@ -78,7 +78,8 @@ class ResultController extends Controller
                 if($checkIfUserHasReallyAProgress == 0) {
                     $row->score = NULL;
                 } else {
-                    $row->score = 'REMOVE ME PLEASE';
+                    // $row->score = 'REMOVE ME PLEASE';
+                    unset($row);
                 }
             }
         } 

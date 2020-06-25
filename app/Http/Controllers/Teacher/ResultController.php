@@ -20,9 +20,9 @@ class ResultController extends Controller
         $topics = Auth::user()->topics;
 
         return View('teacher.results.index')
-        ->with('topics', $topics);
+        ->with('topics', $topics)
         ->with('topic_id', $request->query('topic_id'))
-        ->with('section_id', $request->query('section_id'))
+        ->with('section_id', $request->query('section_id'));
     }
 
     public function getSections($id) {

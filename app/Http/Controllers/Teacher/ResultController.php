@@ -42,6 +42,7 @@ class ResultController extends Controller
         $result = array();
         $mami=[];
         $test=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
+        ->where('progresses.section_id','=',$section_id)
         ->join('users', 'enrolls.user_id', '=', 'users.id')
         ->select('users.id','users.name','users.email','progresses.score','progresses.created_at','enrolls.topic_id','progresses.section_id')->get();
         $etat=0;

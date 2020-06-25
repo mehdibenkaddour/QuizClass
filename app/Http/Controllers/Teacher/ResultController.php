@@ -111,7 +111,10 @@ class ResultController extends Controller
         })
 
         ->addColumn('score', function ($model) {
-            $result = $model->score / $model->questionsCount;
+            $result = 0;
+            
+            if($model->questionsCount > 0)
+                $result = $model->score / $model->questionsCount;
 
             if ($result < 0.5) {
                 $status = 'status-bad';

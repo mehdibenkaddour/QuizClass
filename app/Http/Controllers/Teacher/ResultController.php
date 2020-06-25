@@ -72,14 +72,14 @@ class ResultController extends Controller
         // filter more
         $resultToReturn = array();
 
-        foreach($result as $row) {
+        foreach($result as $key => $row) {
             if($row->section_id != $section_id . "") {
                 $checkIfUserHasReallyAProgress = Progress::whereRaw("section_id = '$section_id' AND user_id = '$row->id'")->count();
                 if($checkIfUserHasReallyAProgress == 0) {
                     $row->score = NULL;
                 } else {
                     // $row->score = 'REMOVE ME PLEASE';
-                    unset($row);
+                    unset($result[$key]);
                 }
             }
         } 

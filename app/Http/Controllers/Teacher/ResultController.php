@@ -41,13 +41,13 @@ class ResultController extends Controller
         $foundSection=Section::where('topic_id','=',$topic_id)->where('id','=',$section_id)->get()->toArray();
         $result = array();
         $mami=[];
+        $tableIfSectionDiffrent=[];
         $test=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
-        ->where('progresses.section_id','=',$section_id)
         ->join('users', 'enrolls.user_id', '=', 'users.id')
         ->select('users.id','users.name','users.email','progresses.score','progresses.created_at','enrolls.topic_id','progresses.section_id')->get();
         $etat=0;
         foreach($test as $te){
-            if($te->topic_id==$topic_id){
+            if($te->topic_id==$topic_id && $te->section_id==$section_id){
             foreach($mami as $ma){
                 if($ma->id == $te->id){
                     $etat=1;
@@ -60,13 +60,32 @@ class ResultController extends Controller
                 continue;
             }else{
                 foreach($test as $tam){
+                  if($tam->topic_id==$topic_id && $tam->section_id==$section_id){
                     if($tam->id == $te->id && $tam->created_at < $te->created_at){
                         $te->score=$tam->score;
                         $te->created_at=$tam->created_at;
                     }
+                 }
                 }
                 $mami[]=$te;
                 }
+            }
+        }
+
+        foreach($test as $te){
+            if($te->topic_id==$topic_id && $te->section_id!=$section_id && $te->section_id!=null){
+                $status=0;
+                foreach($mami as $ma){
+                    if($ma->id == $te->id){
+                        $status=1;
+                    }
+                }
+                if($status!=1){
+                    $te->score=null;
+                    $mami[]=$te;
+                }
+            }else if($te->topic_id==$topic_id && $te->section_id==null){
+                    $mami[]=$te;
             }
         }
         if(count($foundTopic) > 0 && count($foundSection) > 0 ){

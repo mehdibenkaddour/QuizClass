@@ -54,7 +54,7 @@ class ResultController extends Controller
 
             ->join('users', 'enrolls.user_id', '=', 'users.id')
 
-            ->whereRaw("(progresses.attempt = 1 AND progresses.section_id = '$section_id') OR (progresses.score IS NULL AND progresses.attempt = 1)")
+            ->whereRaw("(progresses.attempt = 1 AND progresses.section_id = '$section_id') OR progresses.score IS OR (progresses.attempt = 1 AND progresses.section_id != '$section_id')")
 
             ->selectRaw('users.id, users.name, users.email, progresses.score, progresses.section_id, progresses.attempt')
 

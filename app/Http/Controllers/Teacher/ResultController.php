@@ -43,14 +43,16 @@ class ResultController extends Controller
         if(count($foundTopic) > 0 && count($foundSection) > 0 ){
             $result=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
             ->join('users', 'enrolls.user_id', '=', 'users.id')
-            // ->select('users.id', 'progresses.created_at', 'users.name','users.email','progresses.score')
-            ->selectRaw('users.id, MIN(progresses.created_at), users.name, users.email, progresses.score')
-            ->oldest('progresses.created_at')
-            ->groupBy('users.id')->get();
+            ->select('progresses.created_at', 'users.name','users.email','progresses.score')
+            // ->selectRaw('users.id, users.name, users.email, progresses.score')
+            ->get();
+
+            // ->get();
             // ->distinct()
             // ->distinct()->get();
-            // ->whereRaw("progresses.created_at = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id') OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")->get();
+            // ->whereRaw("progresses.created_at = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id') OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")
         }
+
         foreach($result as $re){
             $re->questionsCount= $questionsCount;
         }

@@ -36,15 +36,41 @@ class ResultController extends Controller
     public function ajaxResults(Request $request) {
         $topic_id = $request->query('topic_id');
         $section_id = $request->query('section_id');
-        $questionsCount=Section::find($section_id)->questions->count();
+        $questionsCount;
         $foundTopic = Topic::where('user_id', '=', $request->user()->id)->where('id', '=', $topic_id)->get()->toArray();
         $foundSection=Section::where('topic_id','=',$topic_id)->where('id','=',$section_id)->get()->toArray();
         $result = array();
+        $mami=[];
+        $test=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
+        ->join('users', 'enrolls.user_id', '=', 'users.id')
+        ->select('users.id','users.name','users.email','progresses.score','progresses.created_at','enrolls.topic_id','progresses.section_id')->get();
+        $etat=0;
+        foreach($test as $te){
+            if($te->topic_id==$topic_id){
+            foreach($mami as $ma){
+                if($ma->id == $te->id){
+                    $etat=1;
+                    break;
+                }else{
+                    $etat=0;
+                }
+            }
+            if($etat==1){
+                continue;
+            }else{
+                foreach($test as $tam){
+                    if($tam->id == $te->id && $tam->created_at < $te->created_at){
+                        $te->score=$tam->score;
+                        $te->created_at=$tam->created_at;
+                    }
+                }
+                $mami[]=$te;
+                }
+            }
+        }
         if(count($foundTopic) > 0 && count($foundSection) > 0 ){
-            $result=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
-            ->join('users', 'enrolls.user_id', '=', 'users.id')
-            ->select('users.name','users.email','progresses.score')
-            ->whereRaw("progresses.created_at = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id') OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")->get();
+            $result=$mami;
+            $questionsCount=Section::find($section_id)->questions->count();
 
         }
         foreach($result as $re){

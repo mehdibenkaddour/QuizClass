@@ -51,6 +51,8 @@ $(document).ready(function() {
 
   let topicIdParam = $("#moduleSelect").val()
 
+  let sectionIdParam = undefined
+
   // ddslick modules
   $("#moduleSelect").ddslick({
     onSelected: function(data) {
@@ -66,7 +68,8 @@ $(document).ready(function() {
       ===== selectedData.value -> topic_id
       =====
       */
-      console.log('topic_id', data.selectedData.value)
+
+      topicIdParam = data.selectedData.value
 
 
       // const url = "{{route('ajax.sections')}}" + '?topic_id=' + topicIdParam
@@ -89,7 +92,10 @@ $(document).ready(function() {
           ===== data.selectedData.value -> section_id
           =====
           */
-          console.log('section_id', data.selectedData.value)
+
+          sectionIdParam = data.selectedData.value
+          console.log('topic_id: ', topicIdParam)
+          console.log('section_id: ', sectionIdParam)
       }   
     });
   }
@@ -121,9 +127,21 @@ $(document).ready(function() {
 
     return data;
   }
-  handleQuestionsLoad();
 
-  function handleQuestionsLoad() {
+  const table = handleResultLoad();
+
+  function handleResultLoad() {
+      const topicIdGET = "{{ $topic_id }}"
+      const sectionIdGET = "{{ $section_id }}"
+
+      let url = undefined
+
+      if(topicIdGET && sectionIdGET) {
+        url = "{{route('ajax.results')}}" + '?topic_id=' + topicIdGET + '&section_id=' + sectionIdGET
+      } else {
+
+      }
+
       const table = $('#resultsTable').DataTable({
         processing: true,
         serverSide: true,
@@ -138,13 +156,8 @@ $(document).ready(function() {
     },
         },
         ajax: {
-          url: "{{route('ajax.results')}}",
-          type:'GET',
-          data: function (d) {
-          d.search=(".dataTables_filter input[type=search]").value;
-          d.topic_id = get('topic_id');
-          d.section_id = get('section_id');
-          }
+          url: url,
+          type:'GET'
 
         },
         columns: [

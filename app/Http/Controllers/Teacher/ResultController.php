@@ -16,10 +16,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ResultController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
         $topics = Auth::user()->topics;
 
+        $topic_id = $request->query('topic_id');
+
+        $section_id = $request->query('section_id');
+
         return View('teacher.results.index')
+        ->with('topic_id', $topic_id)
+        ->with('section_id', $section_id)
         ->with('topics', $topics);
     }
 
@@ -46,7 +52,7 @@ class ResultController extends Controller
         $result = array();
 
 
-        if(count($foundTopic) > 0 && count($foundSection) > 0 ) {
+        if(count($foundTopic) > 0 && count($foundSection) > 0 && Enroll::where('topic_id','=',$topic_id)->count() > 0) {
 
             $result = Enroll::where('topic_id','=',$topic_id)
 
@@ -61,11 +67,6 @@ class ResultController extends Controller
             ->selectRaw('users.id, users.name, users.email, progresses.score, progresses.section_id, progresses.attempt')
 
             ->get();
-
-            // ->get();
-            // ->distinct()
-            // ->distinct()->get();
-            // ->whereRaw("progresses.created_at = (select min(`created_at`) from progresses where user_id = users.id AND section_id = '$section_id') OR (progresses.score is NULL AND enrolls.topic_id='$topic_id')")
         }
 
 
@@ -75,9 +76,11 @@ class ResultController extends Controller
         foreach($result as $key => $row) {
             if($row->section_id != $section_id . "") {
                 $checkIfUserHasReallyAProgress = Progress::whereRaw("section_id = '$section_id' AND user_id = '$row->id'")->count();
+
                 if($checkIfUserHasReallyAProgress == 0) {
                     $row->score = NULL;
                 } else {
+                    // remove it from the $result
                     // $row->score = 'REMOVE ME PLEASE';
                     unset($result[$key]);
                 }

@@ -140,9 +140,27 @@ img.navbar-brand-img {
     align-items: center;
 }
 
-.status {
-    background: #8cffc4;
+.status-excelent,
+.status-not-yet {
+    background: #e0e0e0;
     padding: 3px 12px;
     border-radius: 28px;
     color: #0c0c0c;
 }
+
+.status-good {
+    background-color: #6568ff;
+}
+
+.status-not-bad {
+    background-color: #ffea76;
+}
+
+.status-bad {
+    background-color: #ffa7a7;
+}
+
+.status-excelent {
+    background: #8cffc4;
+}
+

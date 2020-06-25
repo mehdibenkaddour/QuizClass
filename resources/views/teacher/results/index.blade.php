@@ -72,7 +72,6 @@ $(document).ready(function() {
       ===== selectedData.value -> topic_id
       =====
       */
-
       topicIdParam = data.selectedData.value
 
 

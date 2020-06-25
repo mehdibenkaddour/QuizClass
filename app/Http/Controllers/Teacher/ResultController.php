@@ -111,21 +111,38 @@ class ResultController extends Controller
         })
 
         ->addColumn('score', function ($model) {
-            if($model->score==null)
-                    return '
-            <div class="media align-items-center">
-                <div class="media-body">
-                  <span class="name mb-0 text-sm" id="sectionLabel"> Pas encore </span>
+            $result = $model->score / $model->questionsCount;
+
+            if ($result < 0.5) {
+                $status = 'status-bad';
+
+            } else if ($result > 05 && $result < 0.7) {
+                $status = 'status-not-bad';
+
+            } else if ($result >= 0.7 && $result < 0.8) {
+                $status = 'status-good';
+
+            } else {
+                $status = 'status-excelent';
+            }
+
+            if ($model->score == null)
+                return '
+                <div class="media align-items-center">
+                    <div class="media-body">
+                    <span class="name mb-0 status-not-yet text-sm" id="sectionLabel"> Pas encore </span>
+                    </div>
                 </div>
-            </div>
-            ';
-            return '
-            <div class="media align-items-center">
-                <div class="media-body">
-                  <span class="name mb-0 text-sm" id="sectionLabel">' . $model->score . ' / '. $model->questionsCount .'</span>
+                ';
+
+
+                return '
+                <div class="media align-items-center">
+                    <div class="media-body">
+                    <span class="name mb-0 '. $status . ' text-sm" id="sectionLabel">' . $model->score . ' / '. $model->questionsCount .'</span>
+                    </div>
                 </div>
-            </div>
-            ';
+                ';
         })
         
         // to interpret html and not considering it as text

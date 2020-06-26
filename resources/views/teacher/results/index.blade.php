@@ -223,8 +223,12 @@ function progressUser(){
     
     var modal = $(this);
     var test=[]
-    for(var i=0;i < dataResult.result.length;i++){
+    if(dataResult!=undefined){
+      for(var i=0;i < dataResult.result.length;i++){
       test[i]=i+1;
+    }
+    }else{
+      dataResult=[];
     }
     var canvas = modal.find('.modal-body canvas');
     modal.find('.modal-title').html(title);

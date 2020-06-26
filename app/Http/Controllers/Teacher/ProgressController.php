@@ -18,11 +18,11 @@ class ProgressController extends Controller
       
       $user_id = $request->query('user_id');
       $section_id = $request->query('section_id');
-
+      $questionsCount=20;
       $result=Progress::where('user_id',$user_id)->where('section_id',$section_id)->pluck('score');
-
-      $questionsCount = Section::find($section_id)->questions()->count();
-
+      if($result->count()!=0){
+         $questionsCount = Section::find($section_id)->questions()->count();
+      }
       $resultToReturn["questionsCount"] = $questionsCount;
       $resultToReturn["result"]         = $result;
 

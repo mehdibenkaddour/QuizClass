@@ -14,9 +14,18 @@ use Illuminate\Database\Eloquent\Collection;
 class ProgressController extends Controller
 {
    public function ajaxProgress(Request $request){
-    $user_id = $request->query('user_id');
-    $section_id = $request->query('section_id');
-    $result=Progress::where('user_id',$user_id)->where('section_id',$section_id)->pluck('score');
-    return $result;
+      $resultToReturn = NULL;
+      
+      $user_id = $request->query('user_id');
+      $section_id = $request->query('section_id');
+
+      $result=Progress::where('user_id',$user_id)->where('section_id',$section_id)->pluck('score');
+
+      $questionsCount = Section::find($section_id)->questions()->count();
+
+      $resultToReturn["questionsCount"] = $questionsCount;
+      $resultToReturn["result"]         = $result;
+
+      return $resultToReturn;
    }
 }

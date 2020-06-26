@@ -206,7 +206,7 @@ function progressUser(){
     // get title
     var title = link.html();
     // get data
-    var dataResult;
+    let dataResult = undefined;
 
     $.ajax({    
       url: "{{ route('progresses') }}" + '?user_id=' + user_id + '&section_id=' +section_id,
@@ -218,12 +218,12 @@ function progressUser(){
         dataResult = response;
       } 
     });
-    // Chart initialisieren
-    console.log((Object.keys(dataResult)).length);
-    console.log(Object.values(dataResult));
+
+    console.log(dataResult)
+    
     var modal = $(this);
     var test=[]
-    for(var i=0;i < (Object.keys(dataResult)).length;i++){
+    for(var i=0;i < dataResult.result.length;i++){
       test[i]=i+1;
     }
     var canvas = modal.find('.modal-body canvas');
@@ -245,14 +245,14 @@ function progressUser(){
 						pointHoverBackgroundColor: "rgba(2,117,216,1)",
 						pointHitRadius: 20,
 						pointBorderWidth: 2,
-            data: Object.values(dataResult)
+            data: dataResult.result
         }],
           },
         options:{
     scales: {
         yAxes: [{
             ticks: {
-                max: dataResult.length,
+                max: dataResult.questionsCount,
                 min: 0,
                 stepSize: 5
             }

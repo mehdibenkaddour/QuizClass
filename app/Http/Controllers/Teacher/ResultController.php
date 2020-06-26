@@ -101,10 +101,14 @@ class ResultController extends Controller
         return Datatables::of($result)
 
         ->addColumn('name', function ($model) {
+            $section_id = -1;
+
+            if($model->score > 0) $section_id = $model->section_id;
+
             return '
             <div class="media align-items-center">
                 <div class="media-body">
-                    <a href="#" class="chartUser" data-toggle="modal" data-target="#modChart" data-user="' . $model->id . '" data-section="' . $model->section_id . '">
+                    <a href="#" class="chartUser" data-toggle="modal" data-target="#modChart" data-user="' . $model->id . '" data-section="' . $section_id . '">
                         <span class="name mb-0 text-sm" id="sectionLabel">' . $model->name . '</span>
                     </a>
                 </div>

@@ -43,6 +43,7 @@ class AuthController extends ResponseController
             $success['id']= $user->id;
             $success['name']= $user->name;
             $success['email'] = $user->email;
+            $success['avatar'] = $user->profile->image;
             $success['token'] =  $token->accessToken;
             $success['expiresIn'] = "525600";
             
@@ -82,6 +83,7 @@ class AuthController extends ResponseController
         $success['name']= $user->name;
         $success['email']= $user->email;
         $success['token'] =  $token->accessToken;
+        $success['avatar'] = $user->profile->image;
         $success['expiresIn']= "525600";
         return $this->sendResponse($success);
     }

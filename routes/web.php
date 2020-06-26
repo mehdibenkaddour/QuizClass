@@ -44,6 +44,8 @@ Route::group(['middleware' => ['auth','admin']], function () {
     Route::get('/sections/get/{id}', 'Teacher\QuestionController@getSections');
 
     Route::get('/ajax/sections/ddslick/{id}', 'Teacher\ResultController@getSections')->name('ajax.sections.ddslick');
+
+    Route::get('/progress', 'Teacher\ProgressController@ajaxProgress')->name('progresses');
     
     Route::resource('users','Teacher\UserController',['names' => [
         'index' => 'users',

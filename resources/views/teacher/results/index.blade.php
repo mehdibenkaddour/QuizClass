@@ -5,6 +5,21 @@ Résultats
 @endsection
 
 @section('content')
+<div class="modal fade" id="modChart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="body_chart">
+          <canvas id="chart" width="500" height="300"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="card">
   <div class="card-header border-0">
     <h3 class="mb-0">Résultats</h3>
@@ -136,9 +151,6 @@ $(document).ready(function() {
 
     return data;
   }
-
-
-
   function handleResultLoad() {
       const topicIdGET = "{{ $topic_id }}"
       const sectionIdGET = "{{ $section_id }}"
@@ -179,10 +191,84 @@ $(document).ready(function() {
 
   }
 
-})
+});
+progressUser();
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
       return decodeURIComponent(name[1]);
 }
+function progressUser(){
+    $('#modChart').on('shown.bs.modal',function(event){
+    var link = $(event.relatedTarget);
+    // get data source
+    var user_id = link.attr('data-user');
+    var section_id=link.attr('data-section');
+    // get title
+    var title = link.html();
+    // get data
+    var dataResult;
+
+    $.ajax({    
+      url: "{{ route('progresses') }}" + '?user_id=' + user_id + '&section_id=' +section_id,
+      method: 'GET',
+      dataType: 'json',
+      async: false,
+
+      success: function(response){
+        dataResult = response;
+      } 
+    });
+    // Chart initialisieren
+    console.log((Object.keys(dataResult)).length);
+    console.log(Object.values(dataResult));
+    var modal = $(this);
+    var test=[]
+    for(var i=0;i < (Object.keys(dataResult)).length;i++){
+      test[i]=i+1;
+    }
+    var canvas = modal.find('.modal-body canvas');
+    modal.find('.modal-title').html(title);
+    var ctx = document.getElementById("chart");
+    var chart = new Chart(ctx,{ 
+        type:'line',
+        data:{
+          labels: test,
+          datasets: [{
+            label: "Score",
+            lineTension: 0.3,
+						backgroundColor: "rgba(2,117,216,0.2)",
+						borderColor: "rgba(2,117,216,1)",
+						pointRadius: 8,
+						pointBackgroundColor: "rgba(2,117,216,1)",
+						pointBorderColor: "rgba(255,255,255,0.8)",
+						pointHoverRadius: 5,
+						pointHoverBackgroundColor: "rgba(2,117,216,1)",
+						pointHitRadius: 20,
+						pointBorderWidth: 2,
+            data: Object.values(dataResult)
+        }],
+          },
+        options:{
+    scales: {
+        yAxes: [{
+            ticks: {
+                max: 20,
+                min: 0,
+                stepSize: 5
+            }
+        }]
+    }
+}
+    });
+  }).on('hidden.bs.modal',function(event){
+    // reset canvas size
+    var modal = $(this);
+    var canvas = modal.find('.modal-body canvas');
+    // destroy modal
+    $('#chart').remove(); // this is my <canvas> element
+    $('#body_chart').append('<canvas id="chart"><canvas>');
+    $(this).data('bs.modal', null);
+  });
+  }
 </script>
 @endsection

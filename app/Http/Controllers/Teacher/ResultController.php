@@ -103,7 +103,7 @@ class ResultController extends Controller
         ->addColumn('name', function ($model) {
             $section_id = -1;
 
-            if($model->score > 0) $section_id = $model->section_id;
+            if($model->score >= 0) $section_id = $model->section_id;
 
             return '
             <div class="media align-items-center">

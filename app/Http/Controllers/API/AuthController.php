@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ResponseController as ResponseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Models\Profile;
 use Validator;
 
 class AuthController extends ResponseController
@@ -30,6 +31,13 @@ class AuthController extends ResponseController
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+
+        $profile= new Profile();
+        $profile->user_id=$user->id;
+        $profile->image='default.png';
+        $profile->save();
+
+
         if($user){
             $token=$user->createToken('token');
             $success['id']= $user->id;
@@ -37,6 +45,7 @@ class AuthController extends ResponseController
             $success['email'] = $user->email;
             $success['token'] =  $token->accessToken;
             $success['expiresIn'] = "525600";
+            
             return $this->sendResponse($success);
         }
         else{

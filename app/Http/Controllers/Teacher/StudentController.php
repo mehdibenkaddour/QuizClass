@@ -37,7 +37,11 @@ class StudentController extends Controller
         $result = array();
         
         if (!is_null($topic_id) && count($found) > 0) {
-            $result=Enroll::where('topic_id','=',$topic_id)->join('users', 'enrolls.user_id', '=', 'users.id')->join('topics', 'enrolls.topic_id', '=', 'topics.id')->select('enrolls.id','users.name','users.email','topics.label');
+            $result=Enroll::where('topic_id','=',$topic_id)
+            ->join('users', 'enrolls.user_id', '=', 'users.id')
+            ->join('topics', 'enrolls.topic_id', '=', 'topics.id')
+            ->join('profiles', 'users.id', 'profiles.user_id')
+            ->select('enrolls.id', 'profiles.image', 'users.name','users.email','topics.label');
         }
         
         return Datatables::of($result)
@@ -57,13 +61,24 @@ class StudentController extends Controller
             </div>';
         })
 
-        ->addColumn('name', function ($model) {
+        ->addColumn('name', function ($student) {
+            // return '
+            // <div class="media align-items-center">
+            //     <div class="media-body">
+            //       <span class="name mb-0 text-sm" id="userName">' . $student->name . '</span>
+            //     </div>
+            // </div>';
+
             return '
             <div class="media align-items-center">
+                <a href="#" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="/uploads/profiles/' . $student->image . '">
+                </a>
                 <div class="media-body">
-                  <span class="name mb-0 text-sm" id="userName">' . $model->name . '</span>
+                  <span class="name mb-0 text-sm" id="userName">' . $student->name . '</span>
                 </div>
-            </div>';
+            </div>
+            ';
         })
 
         ->addColumn('email', function ($model) {

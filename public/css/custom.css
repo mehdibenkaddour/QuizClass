@@ -167,3 +167,7 @@ img.navbar-brand-img {
     background: #8cffc4;
 }
 
+.avatar img {
+    height: 100%;
+    object-fit: cover;
+}

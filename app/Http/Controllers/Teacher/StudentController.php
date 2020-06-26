@@ -71,7 +71,7 @@ class StudentController extends Controller
 
             return '
             <div class="media align-items-center">
-                <a href="#" class="avatar rounded-circle mr-3">
+                <a href="#" style="object-fit: cover" class="avatar rounded-circle mr-3">
                     <img alt="Image placeholder" src="/uploads/profiles/' . $student->image . '">
                 </a>
                 <div class="media-body">

@@ -252,7 +252,7 @@ function progressUser(){
     scales: {
         yAxes: [{
             ticks: {
-                max: 20,
+                max: dataResult.length,
                 min: 0,
                 stepSize: 5
             }

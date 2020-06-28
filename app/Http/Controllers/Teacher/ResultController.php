@@ -46,7 +46,8 @@ class ResultController extends Controller
         $tableIfSectionDiffrent=[];
         $test=Enroll::where('topic_id','=',$topic_id)->leftJoin('progresses','enrolls.user_id','=','progresses.user_id')
         ->join('users', 'enrolls.user_id', '=', 'users.id')
-        ->select('users.id','users.name','users.email','progresses.score','progresses.created_at','enrolls.topic_id','progresses.section_id')->get();
+        ->join('profiles', 'users.id', 'profiles.user_id')
+        ->select('users.id','users.name', 'profiles.image', 'users.email','progresses.score','progresses.created_at','enrolls.topic_id','progresses.section_id')->get();
         $etat=0;
         foreach($test as $te){
             if($te->topic_id==$topic_id && $te->section_id==$section_id){
@@ -105,6 +106,9 @@ class ResultController extends Controller
     
             return '
             <div class="media align-items-center">
+                <a href="#" style="object-fit: cover" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="/uploads/profiles/' . $model->image . '">
+                </a>
                 <div class="media-body">
                     <a href="#" class="chartUser" data-toggle="modal" data-target="#modChart" data-user="' . $model->id . '" data-section="' . $model->section_id . '">
                         <span class="name mb-0 text-sm" id="sectionLabel">' . $model->name . '</span>

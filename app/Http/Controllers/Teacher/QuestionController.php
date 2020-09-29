@@ -68,24 +68,51 @@ class QuestionController extends Controller
         })
 
         ->addColumn('type', function (Question $question) {
+            $questionType = 'Multi-choix avec code';
+
+            if($question->type == 2) {
+                $questionType = 'Multi-choix avec image';
+            } else if ($question->type == 3) {
+                $questionType = 'Guess the output';
+            }
+
             return '
             <div class="media align-items-center">
                 <div class="media-body">
-                  <span class="name mb-0 text-sm" id="sectionLabel">' . $question->type . '</span>
+                  <span class="name mb-0 text-sm" id="sectionLabel">' . $questionType . '</span>
                 </div>
             </div>
             ';
         })
-
-        ->addColumn('section', function(Question $question) {
-            return $question->section->topic->label;
-        })
         ->addColumn('topic', function(Question $question) {
-            return $question->section->label;
+            return '
+            <div class="media align-items-center">
+                <a href="#" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="/uploads/topics/' . $question->section->topic->image . '">
+                </a>
+                <div class="media-body">
+                <span class="name mb-0 text-sm" id="sectionLabel">' . $question->section->topic->label . '</span>
+                </div>
+            </div>
+            ';
+            // return $question->section->label;
         })
-        
+        ->addColumn('section', function(Question $question) {
+            return '
+            <div class="media align-items-center">
+                <a href="#" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="/uploads/sections/' . $question->section->image . '">
+                </a>
+                <div class="media-body">
+                <span class="name mb-0 text-sm" id="sectionLabel">' . $question->section->label . '</span>
+                </div>
+            </div>
+            ';
+            // return $question->section->topic->label;
+        })
+
         // to interpret html and not considering it as text
-        ->rawColumns(['actions', 'type','question'])
+        ->rawColumns(['actions', 'type','question', 'section', 'topic'])
 
         ->toJson();
     }
@@ -93,7 +120,7 @@ class QuestionController extends Controller
     */
 
     /*
-     this method for geting section of topics used in dynamic dropdown menu 
+     this method for geting section of topics used in dynamic dropdown menu
     */
     public function getSections($id){
         $sections= Section::where("topic_id",$id)->pluck("label","id");
@@ -122,12 +149,12 @@ class QuestionController extends Controller
         $messages = [
             'correct_answers.required' => 'you must select at least one of the answer as correct',
             ];
-                    
+
         $validator = Validator::make($request->all(), [
             'content' => ['required', 'string'],
             'correct_answers'=>['required'],
             ],$messages);
-            
+
         if ($validator->fails())
         {
             return response()->json(['errors'=>$validator->errors()]);
@@ -164,13 +191,13 @@ class QuestionController extends Controller
         $messages = [
             'correct_answers.required' => 'you must select at least one of the answer as correct',
         ];
-                
+
         $validator = Validator::make($request->all(), [
             'content' => ['required', 'string'],
             'correct_answers'=>['required'],
             'image' => ['required','image','mimes:jpeg,png,jpg,gif', 'max:2084'],
         ],$messages);
-        
+
         if ($validator->fails())
         {
             return response()->json(['errors'=>$validator->errors()]);
@@ -209,12 +236,12 @@ class QuestionController extends Controller
 
         return response()->json(['alert' => 'La question a été ajouté avec succès']);
 
-       }else{         
+       }else{
         $validator = Validator::make($request->all(), [
             'content' => ['required', 'string'],
             'correct_answer'=>['required'],
             ]);
-            
+
         if ($validator->fails())
         {
             return response()->json(['errors'=>$validator->errors()]);

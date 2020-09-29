@@ -7,9 +7,9 @@ ITerview
 @section('content')
 @component('teacher.helpers.modal')
     @slot('title')
-        Delete alert
+        Suppresstion de la question !
     @endslot
-    
+
     @slot('modalId')
         delete-modal
     @endslot
@@ -23,7 +23,7 @@ ITerview
     @endslot
 
     @slot('content')
-    Voulez-vous vraiment supprimer ce question
+    Voulez-vous vraiment supprimer cette question
     @endslot
 
     @slot('cancel')
@@ -97,7 +97,7 @@ ITerview
 <!-- Type 1 -->
 @component('teacher.helpers.modal')
     @slot('title')
-    Ajouter une question du premier type
+    Ajouter une question multi-choix avec code
     @endslot
 
     @slot('modalId')
@@ -121,7 +121,7 @@ ITerview
           </span>
       </div>
 
-      
+
 
       <div class="form-group">
           <label for="code">Entrer le code <small>(optionnel)</small></label>
@@ -189,7 +189,7 @@ ITerview
 
 @component('teacher.helpers.modal')
     @slot('title')
-    Ajouter une question du deuxiéme type
+    Ajouter une question multi-choix avec image
     @endslot
 
     @slot('modalId')
@@ -284,7 +284,7 @@ ITerview
 
 @component('teacher.helpers.modal')
     @slot('title')
-    Ajouter une question du troisiéme type
+    Ajouter une question guess the output
     @endslot
 
     @slot('modalId')
@@ -346,7 +346,7 @@ ITerview
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Le Type de la question</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Choisir le type de la question</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -356,14 +356,14 @@ ITerview
       <div class="row">
         <div class="col">
           <div class="form-group">
-            <label>Le sujet</label>
+            <label>Module</label>
             <select class="browser-default custom-select" name="add-topic-1" id="add-topic-1" required>
-                <option selected disabled value="">Choisissez un sujet</option>
+                <option selected disabled value="">Choisissez un module</option>
                 @foreach($topics as $topic )
                 <option value="{{$topic->id}}">{{$topic->label}}</option>
                 @endforeach
             </select>
-  
+
             <span class="text-danger">
                 <strong id="add-topic-error-1"></strong>
             </span>
@@ -372,9 +372,9 @@ ITerview
 
         <div class="col">
           <div class="form-group">
-              <label>L'element</label>
+              <label>Quiz</label>
               <select class="browser-default custom-select" name="add-section-1" id="add-section-1" required>
-                  <option selected disabled>Choisissez un élement</option>
+                  <option selected disabled>Choisissez un quiz</option>
               </select>
               <span class="text-danger">
                 <strong id="add-section-error-1"></strong>
@@ -407,7 +407,7 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">La list des questions</h3>
+    <h3 class="mb-0">Liste des questions</h3>
     <button class="btn btn-primary float-right add">Ajouter une question</button>
   </div>
   <!-- Light table -->
@@ -415,11 +415,11 @@ ITerview
     <table class="table align-items-center table-flush" id="questionsTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col">La question</th>
-          <th scope="col">Le type</th>
-          <th scope="col">Le sujet</th>
-          <th scope="col">L'element</th>
-          <th scope="col">Les actions</th>
+          <th scope="col">Question</th>
+          <th scope="col">Type</th>
+          <th scope="col">Quiz</th>
+          <th scope="col">Module</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody class="list">
@@ -555,7 +555,7 @@ $(document).ready(function() {
         e.preventDefault();
         $( '#edit-label-error' ).html( "" );
         $( '#edit-image-error' ).html( "" );
-        $.ajax({    
+        $.ajax({
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           url: urlForm,
           method: 'POST',
@@ -611,9 +611,9 @@ $(document).ready(function() {
                 });
 
 
-            
+
             // show the modal
-            $('#add-modal-1').modal('show'); 
+            $('#add-modal-1').modal('show');
 
             $('#add-form-1').unbind('submit').submit(function(e){
                 // turn button into loading state
@@ -629,7 +629,7 @@ $(document).ready(function() {
                 });
                 // get index of the correct answers
                 var checkedList=[];
-                $("input[name='answer']").each(function (i) { 
+                $("input[name='answer']").each(function (i) {
                         // Push the value onto the array
                         if($(this)[0].checked){
                           checkedList.push(i);
@@ -698,7 +698,7 @@ $(document).ready(function() {
                 });
 
 
-            
+
             // show the modal
             $('#add-modal-2').modal('show');
 
@@ -716,7 +716,7 @@ $(document).ready(function() {
                 });
                 // get index of the correct answers
                 var checkedList=[];
-                $("input[name='answer-2']").each(function (i) { 
+                $("input[name='answer-2']").each(function (i) {
                         // Push the value onto the array
                         if($(this)[0].checked){
                           checkedList.push(i);
@@ -773,7 +773,7 @@ $(document).ready(function() {
                        }
                     }
                     else{
-                        iterview.handleSuccessResponse(table, result, '#add-modal-1');
+                        iterview.handleSuccessResponse(table, result, '#add-modal-2');
                     }
                 }});
 
@@ -788,7 +788,7 @@ $(document).ready(function() {
             codeMirror.setValue("");
             codeMirror.refresh();
             // show the modal
-            $('#add-modal-3').modal('show'); 
+            $('#add-modal-3').modal('show');
 
             $('#add-form-3').unbind('submit').submit(function(e){
                 // turn button into loading state
@@ -830,7 +830,7 @@ $(document).ready(function() {
                 }});
 
             });
-            
+
 
           }
         })
@@ -859,7 +859,7 @@ $(document).ready(function() {
 
     });
   }
-    
+
 });
 function get(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))

@@ -9,7 +9,7 @@ Gestion des étudiants
     @slot('title')
         Supprimer un élement
     @endslot
-    
+
     @slot('modalId')
         delete-modal
     @endslot
@@ -42,14 +42,14 @@ Gestion des étudiants
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">La Liste des étudiants</h3>
+    <h3 class="mb-0">Liste des étudiants</h3>
   </div>
 
   <div class="card-body">
   @if (!$topic_id && count($topics) > 0)
     <select id="moduleSelect">
       @foreach ($topics as $topic)
-      <option 
+      <option
         data-imagesrc={{'/uploads/topics/' . $topic->image}}
         value="{{ $topic->id }}">
         {{ $topic->label }}
@@ -64,10 +64,9 @@ Gestion des étudiants
     <table class="table align-items-center table-flush" id="studentsTable">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Le nom et prénom</th>
+          <th scope="col">Nom et prénom</th>
           <th scope="col">Email</th>
-          <th scope="col">Topic</th>
-          <th scope="col">Les actions</th>
+          <th scope="col">Actions</th>
         </tr>
       </thead>
       <tbody class="list">
@@ -114,7 +113,7 @@ $(document).ready(function() {
     const topicIdGET = "{{ $topic_id }}"
 
     let url = undefined
-    
+
     if(topicIdGET) {
       url = "{{route('ajax.students')}}" + '?topic_id=' + "{{ $topic_id }}"
     } else if(topicIdParam) {
@@ -145,7 +144,6 @@ $(document).ready(function() {
         columns: [
             { data: 'name', name: 'users.name' },
             { data: 'email', name: 'users.email' },
-            { data: 'topic', name: 'topics.label' },
             { data: 'actions', name: 'actions' }
         ]
     });

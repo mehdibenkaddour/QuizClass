@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('section-title')
-Welcome back {{ $user->name }}
+Bienvenue {{ $user->name }}
 @endsection
 
 @section('content')
@@ -35,7 +35,7 @@ Welcome back {{ $user->name }}
                       <h5 class="card-title text-uppercase text-muted mb-0">Modules</h5>
                     </a>
                     <span class="h2 font-weight-bold mb-0">{{$user->topics()->count()}}</span>
-                    
+
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">

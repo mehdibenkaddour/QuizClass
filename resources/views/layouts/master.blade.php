@@ -35,7 +35,7 @@
 
   {{-- Dropfiy --}}
   <link rel="stylesheet" href="{{asset('css/dropify.min.css')}}">
-  
+
 </head>
 
 <body>
@@ -104,7 +104,7 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ route('results') }}">
                 <i class="ni ni-chart-bar-32"></i>
-                <span class="nav-link-text">Résultat</span>
+                <span class="nav-link-text">Résultats</span>
               </a>
             </li>
           </ul>
@@ -176,8 +176,8 @@
                   <span>Edit profile</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a 
-                  href="{{ route('logout') }}" 
+                <a
+                  href="{{ route('logout') }}"
                   class="dropdown-item"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 
@@ -317,13 +317,13 @@
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+              &copy; 2020
             </div>
           </div>
           <div class="col-lg-6">
             <ul class="nav nav-footer justify-content-center justify-content-lg-end">
               <li class="nav-item">
-                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">ITerview APP</a>
+                <a href="http://ensao.ump.ma" class="nav-link" target="_blank">QuizClass Web</a>
               </li>
             </ul>
           </div>

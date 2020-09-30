@@ -339,9 +339,6 @@ ITerview
 @endcomponent
 
 
-
-
-
 <div class="modal fade" id="question-type">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -407,7 +404,7 @@ ITerview
 <div class="card">
   <!-- Card header -->
   <div class="card-header border-0">
-    <h3 class="mb-0">Liste des questions</h3>
+    <h3 class="mb-0">Liste des questions {{ $section ? ' : ' . $section->label : '' }}</h3>
     <button class="btn btn-primary float-right add">Ajouter une question</button>
   </div>
   <!-- Light table -->

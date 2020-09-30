@@ -21,8 +21,13 @@ class QuestionController extends Controller
      */
     public function index(Request $request)
     {
+        $section = Section::find($request->query('section_id'));
+
         $topics=Topic::where('user_id','=',$request->user()->id)->get();
-        return View('teacher.questions.index')->with('topics',$topics);
+
+        return View('teacher.questions.index')
+        ->with('topics',$topics)
+        ->with('section', $section);
     }
     /**
      * This method is for ajax only
